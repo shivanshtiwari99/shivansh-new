@@ -1,0 +1,78 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <div class="header-left">
+      <h2>Product Categories</h2>
+      <span class="category-count">{{ categories.length }} Total</span>
+    </div>
+
+    <div class="header-right">
+      <input [(ngModel)]="searchText" (ngModelChange)="filterCategories()" placeholder="Search category..." class="search-box"/>
+      <button class="btn-add" data-bs-toggle="modal" data-bs-target="#addModal">
+        <i class="fa-solid fa-plus"></i> Add Category
+      </button>
+    </div>
+  </div>
+
+  <div class="category-grid">
+    <div *ngFor="let cat of filteredCategories" class="category-card">
+      <div class="card-top">
+        <div class="card-title">
+          <i class="fa-solid fa-layer-group"></i>
+          <h5>{{ cat.c_name }}</h5>
+        </div>
+        <span class="status-badge">Active</span>
+      </div>
+      <p>ID: {{ cat.c_id }}</p>
+      <div class="card-actions">
+        <button class="btn-edit" (click)="openEdit(cat)" data-bs-toggle="modal" data-bs-target="#editModal">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="btn-delete" (click)="deleteCategory(cat.c_id)">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" [(ngModel)]="addName" class="form-control mb-3" placeholder="Category Name">
+        <input type="file" (change)="onAddFileChange($event)" class="form-control mb-3">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addCategory()">Add</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" [(ngModel)]="editName" class="form-control mb-3" placeholder="Category Name">
+        <input type="file" (change)="onEditFileChange($event)" class="form-control mb-3">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveEdit()">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

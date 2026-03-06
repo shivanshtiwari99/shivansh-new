@@ -1,0 +1,244 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<div class="page-header">
+    <div class="header-left">
+        <h2>All Products </h2>
+        <span class="total-badge"><span id="totalProducts">0</span> Total</span>
+    </div>
+
+    <div class="header-right">
+        <input type="text" id="searchProduct" placeholder="Search product..." />
+        
+    </div>
+</div>
+
+<div class="card-grid" id="product_container"></div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        loadProducts();
+
+        function loadProducts() {
+            $.ajax({
+                url: '/api/UserApi/products',
+                type: 'GET',
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                success: function (res) {
+
+                    let container = $("#product_container");
+                    container.empty();
+
+                    $("#totalProducts").text(res.length);
+
+                    $.each(res, function (index, ele) {
+
+                        let card = `
+                            <div class="card-item" data-name="${ele.p_name.toLowerCase()}">
+
+        
+        <div class="card-image p-0 m-0">
+            <img src="${ele.p_picture}" alt="${ele.p_name}">
+        </div>
+
+        <div class="card-top mt-3">
+            <div class="card-title">
+                <i class="fa-solid fa-industry"></i>
+                <h3 class="fs-5">${ele.p_name}</h3>
+            </div>
+            
+        </div>
+
+        <div class="price-badge">
+            ₹ ${ele.p_price}
+        </div>
+
+        <p class="description">
+            ${ele.p_desc}
+        </p>
+
+        <div class="card-actions">
+            <a href="#" class="btn-edit">
+                Add To Cart
+            </a>
+        </div>
+    </div>
+                        `;
+
+                        container.append(card);
+                    });
+                }
+            });
+        }
+
+        $("#searchProduct").on("keyup", function () {
+            let value = $(this).val().toLowerCase();
+
+            $(".card-item").filter(function () {
+                $(this).toggle($(this).data("name").includes(value));
+            });
+        });
+
+    });
+</script>
+<style>
+    body {
+        background: #f4f6f7;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 250px; /* 🔹 Fixed height */
+        overflow: hidden;
+        border-radius: 20px;
+    }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+             /* 🔹 Image stretch nahi hogi */
+        }
+
+    /* HEADER */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .header-left h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+    .total-badge {
+        background: #d4efdf;
+        color: #117a65;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    .header-right {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+        .header-right input {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            width: 220px;
+            font-size: 14px;
+        }
+
+    .add-btn {
+        background: #117a65;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    /* GRID */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
+    }
+
+    /* CARD */
+    .card-item {
+        background: #ffffff;
+        padding: 22px;
+        border-radius: 16px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    }
+
+    /* TOP */
+    .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .card-title i {
+            color: #117a65;
+            font-size: 18px;
+        }
+
+        .card-title h3 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+    .status-badge {
+        background: #d5f5e3;
+        color: #1e8449;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+    }
+
+    /* PRICE */
+    .price-badge {
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #2e86c1;
+    }
+
+    /* DESCRIPTION */
+    .description {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #555;
+        min-height: 30px;
+    }
+
+    /* ACTIONS */
+    .card-actions {
+        margin-top: 8px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-edit
+     {
+        flex: 1;
+        padding: 6px;
+        border-radius: 10px;
+        text-align: center;
+        text-decoration:none;
+        font-size:17px;
+    }
+
+    .btn-edit {
+        background: #d6eaf8;
+        color: #21618c;
+    }
+
+    }
+</style>

@@ -1,0 +1,445 @@
+﻿@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-container">
+
+    <!-- ================= HEADER ================= -->
+    <div class="page-header">
+        <div class="header-left">
+            <h2>Product Categories</h2>
+            <span class="category-count">0 Total</span>
+        </div>
+
+        <div class="header-right">
+            <input type="text" id="searchInput" placeholder="Search category..." class="search-box" />
+
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn-add">
+                <i class="fa-solid fa-plus"></i> Add Category
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= GRID CONTAINER ================= -->
+    <div class="category-grid" id="category_sec"></div>
+
+</div>
+<!--Edit Modal-->
+<!-- ================= Edit Category Modal ================= -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryForm" enctype="multipart/form-data">
+                    <input type="hidden" id="edit_c_id" />
+                    <input type="text" id="edit_c_name" class="form-control mb-3" placeholder="Category Name" />
+                    <input type="file" id="edit_c_picture" class="form-control mb-3" />
+                    <!-- Show existing picture name -->
+                    <input type="text" id="edit_c_picture_name" class="form-control mb-3" readonly />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="editSaveBtn" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="row">
+    <div class="col-sm-10 mx-auto">
+
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Category</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="addCategoryForm" enctype="multipart/form-data">
+                            <div class="col-sm-9 mx-auto border border-3 py-4 rounded-3 px-2">
+                                <input type="text" id="c_name" name="c_name" class="form-control mb-3" placeholder="Add Category..." />
+                                <input type="file" id="c_picture" name="c_picture" class="form-control mb-3" />
+                                <center>
+                                    <input type="button" id="addbtn" value="Add" class="form-control btn btn-primary w-50" />
+                                </center>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= STYLES ================= -->
+<style>
+    .page-container {
+        width: 100%;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .category-count {
+        background: #e6f4f4;
+        color: #008080;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .search-box {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 220px;
+        outline: none;
+    }
+
+        .search-box:focus {
+            border-color: #008080;
+        }
+
+    .btn-add {
+        background: #008080;
+        color: white;
+        padding: 9px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: .3s;
+    }
+
+        .btn-add:hover {
+            background: #006666;
+        }
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px,1fr));
+        gap: 20px;
+        width: 100%;
+    }
+
+    .category-card {
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,.06);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 160px;
+        transition: .3s;
+    }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,.12);
+        }
+
+    .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .card-title i {
+            color: #008080;
+        }
+
+    .status-badge {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+        background: #e6f7ef;
+        color: #1f9254;
+    }
+
+    .category-card p {
+        margin: 8px 0;
+        color: #666;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-edit, .btn-delete {
+        flex: 1;
+        text-align: center;
+        padding: 7px 0;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: .3s;
+        cursor: pointer;
+    }
+
+    .btn-edit {
+        background: #e6f4f4;
+        color: #008080;
+        border:none;
+    }
+
+        .btn-edit:hover {
+            background: #d1eded;
+        }
+
+    .btn-delete {
+        background: #ffe8e8;
+        color: #d9534f;
+        border:none;
+    }
+
+        .btn-delete:hover {
+            background: #ffd4d4;
+        }
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+
+        
+        loadCategory();
+
+        
+        function loadCategory(){
+            $.ajax({
+                url: '/api/AdminApi/categories',
+                type: 'GET',
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                success: function (res) {
+
+                    let container = $("#category_sec");
+                    container.empty();
+
+                    if (res.length === 0) {
+                        container.html("<h4>No categories found.</h4>");
+                        $(".category-count").text("0 Total");
+                        return;
+                    }
+
+                    $.each(res, function (ind, ele) {
+                        let card = `
+                            <div class="category-card" data-name="${ele.c_name.toLowerCase()}">
+                                <div class="card-top">
+                                    <div class="card-title">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        <h5>${ele.c_name}</h5>
+                                    </div>
+                                    <span class="status-badge">Active</span>
+                                </div>
+
+                                <p>ID: ${ele.c_id}</p>
+
+                                <div class="card-actions">
+                                        <button class="btn-edit" data-id="${ele.c_id}">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+
+                                    <button class="btn-delete" data-id="${ele.c_id}">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        container.append(card);
+                    });
+
+                    $(".category-count").text(res.length + " Total");
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to load categories.", "error");
+                }
+            });
+        }
+
+            
+        $(document).on("click", ".btn-edit", function () {
+            let cid = $(this).data("id"); 
+            $("#edit_c_id").val(cid);         
+            $("#edit_c_name").val("");        
+            $("#edit_c_picture").val("");   
+            $("#editModal").modal("show");  
+        });
+
+        $(document).on("click", ".btn-edit", function () {
+        let cid = $(this).data("id"); 
+
+        //prefiil data
+        $.ajax({
+            url: "/api/AdminApi/idcategory?cid=" + cid,
+            type: "GET",
+            headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+            success: function(res) {
+                
+                console.log(res);
+                $("#edit_c_id").val(res[0].c_id);
+                $("#edit_c_name").val(res[0].c_name);
+                $("#edit_c_picture").val(""); // file input reset
+                $("#edit_c_picture_name").val(res[0].c_picture); // show existing picture name
+
+                // Show modal
+                $("#editModal").modal("show");
+            },
+            error: function() {
+                Swal.fire("Error!", "Failed to fetch category data", "error");
+            }
+        });
+    });
+
+    // update  form
+            $("#editSaveBtn").click(function () {
+
+        var formData = new FormData();
+
+        formData.append("c_id", $("#edit_c_id").val());
+        formData.append("c_name", $("#edit_c_name").val());
+
+        var selectedFile = $("#edit_c_picture")[0].files[0];
+
+        if (selectedFile) {
+            formData.append("file", selectedFile);  
+        }
+
+        
+        formData.append("oldImage", $("#edit_c_picture_name").val());
+
+        $.ajax({
+            url: "/api/AdminApi/updatecategory",
+            type: "PUT",
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+
+            success: function (res) {
+                Swal.fire("Success!", res, "success");
+                $("#editModal").modal("hide");
+                loadCategory();
+            },
+            error: function (err) {
+                console.log(err);
+                Swal.fire("Error!", "Update failed!", "error");
+            }
+        });
+
+    });
+
+        // Delete Category
+        $(document).on("click", ".btn-delete", function () {
+            let cid = $(this).data("id");
+            deleteCategory(cid);
+        });
+
+        function deleteCategory(cid) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/api/adminapi/deleteCateg?cid=" + cid,
+                        type: "DELETE",
+                        headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                        success: function (res) {
+                            Swal.fire("Deleted!", res, "success");
+                            loadCategory();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                            Swal.fire("Error!", "Delete failed!", "error");
+                        }
+                    });
+                }
+            });
+        }
+
+        //Add Category
+        $("#addbtn").click(function () {
+            var formData = new FormData();
+            formData.append("c_name", $("#c_name").val());
+
+            var file = $("#c_picture")[0].files[0];
+            if (file != null) {
+                formData.append("imageFile", file);
+            }
+
+            $.ajax({
+                url: "/api/AdminApi/addcategory",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                success: function (res) {
+                    Swal.fire("Success!", res, "success");
+                    loadCategory();
+                    $("#c_name").val("");
+                    $("#c_picture").val("");
+                    $("#exampleModal").modal('hide');
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to Add category.", "error");
+                }
+            });
+        });
+
+        // Search Filter
+        $("#searchInput").on("keyup", function () {
+            let value = $(this).val().toLowerCase();
+            $(".category-card").filter(function () {
+                $(this).toggle($(this).data("name").includes(value));
+            });
+        });
+
+    });
+</script>

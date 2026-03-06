@@ -1,0 +1,182 @@
+<div class="container mt-4 text-center">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Products</h3>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+      Add Product
+    </button>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="mb-3">
+    <input type="text"
+           class="form-control"
+           placeholder="Search product..."
+           [(ngModel)]="searchText"
+           (keyup)="filterProducts()">
+  </div>
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <!-- PRODUCT TABLE -->
+  <div class="table-responsive" *ngIf="!loading">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th width="150">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filteredProducts">
+          <td>
+            <img *ngIf="p.p_picture"
+                 [src]="'https://localhost:7071' + p.p_picture"
+                 width="60"
+                 height="60"
+                 style="object-fit:cover;">
+          </td>
+          <td>{{ p.p_name }}</td>
+          <td>₹ {{ p.p_price }}</td>
+          <td>{{ p.c_name }}</td>
+          <td>{{ p.p_desc }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal"
+                    (click)="openEdit(p)">
+              Edit
+            </button>
+
+            <button class="btn btn-sm btn-danger"
+                    (click)="deleteProduct(p.p_id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ================= ADD MODAL ================= -->
+
+<div class="modal fade" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Add Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label>Name</label>
+          <input type="text" class="form-control" [(ngModel)]="addName">
+        </div>
+
+        <div class="mb-3">
+          <label>Price</label>
+          <input type="number" class="form-control" [(ngModel)]="addPrice">
+        </div>
+
+        <div class="mb-3">
+          <label>Category</label>
+          <select class="form-select" [(ngModel)]="addCategoryId">
+            <option [ngValue]="undefined">Select Category</option>
+            <option *ngFor="let c of categories" [ngValue]="c.c_id">
+              {{ c.c_name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Description</label>
+          <textarea class="form-control" [(ngModel)]="addDesc"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Image</label>
+          <input type="file" class="form-control" (change)="onAddFileChange($event)">
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="addProduct()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= EDIT MODAL ================= -->
+
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">Edit Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label>Name</label>
+          <input type="text" class="form-control" [(ngModel)]="editName">
+        </div>
+
+        <div class="mb-3">
+          <label>Price</label>
+          <input type="number" class="form-control" [(ngModel)]="editPrice">
+        </div>
+
+        <div class="mb-3">
+          <label>Category</label>
+          <select class="form-select" [(ngModel)]="editCategoryId">
+            <option *ngFor="let c of categories" [ngValue]="c.c_id">
+              {{ c.c_name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Description</label>
+          <textarea class="form-control" [(ngModel)]="editDesc"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Image</label>
+          <input type="file" class="form-control" (change)="onEditFileChange($event)">
+        </div>
+
+        <div class="mb-2" *ngIf="editOldImage">
+          <img [src]="'https://localhost:7071' + editOldImage"
+               width="80"
+               height="80"
+               style="object-fit:cover;">
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-warning" data-bs-dismiss="modal" (click)="saveEdit()">Update</button>
+      </div>
+
+    </div>
+  </div>
+</div>

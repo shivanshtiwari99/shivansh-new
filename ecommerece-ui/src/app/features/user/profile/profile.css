@@ -1,0 +1,55 @@
+body {
+  background: #f2f7f7;
+}
+
+.banner-top {
+  position: relative;
+  height: 80px;
+  background: linear-gradient(to right, #008080, #00b3b3);
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid white;
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: cover;
+}
+
+.card-body p, .card-body strong {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.btn-primary {
+  background: #008080;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #006666;
+}
+
+/* Modal Styles */
+.modal {
+  background: rgba(0,0,0,0.5);
+  display: none;
+}
+
+.modal.show.d-block {
+  display: block;
+}
+
+.modal-dialog {
+  max-width: 400px;
+  margin: 100px auto;
+}
+
+.modal-content {
+  border-radius: 12px;
+  padding: 20px;
+}

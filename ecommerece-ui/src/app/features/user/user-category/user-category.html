@@ -1,0 +1,58 @@
+<!-- user-category.component.html -->
+
+<div class="page-container">
+
+  <!-- ================= HEADER ================= -->
+  <div class="page-header">
+
+    <div class="header-left">
+      <h2>Product Categories</h2>
+      <span class="category-count">{{ filteredCategories.length }} Total</span>
+    </div>
+
+    <div class="header-right">
+      <input type="text" 
+             placeholder="Search category..." 
+             class="search-box" 
+             [(ngModel)]="searchText" 
+             (input)="filterCategories()" />
+    </div>
+
+  </div>
+
+  <!-- ================= GRID CONTAINER ================= -->
+  <div class="category-grid" *ngIf="!loading; else loadingTemplate">
+
+    <div *ngIf="filteredCategories.length === 0">
+      <h4>No categories found.</h4>
+    </div>
+
+    <div *ngFor="let category of filteredCategories" class="category-card">
+      
+      <div class="card-image">
+        <img [src]="'https://localhost:7071' + category.c_picture || 'assets/default-category.jpg'" 
+             [alt]="category.c_name"/>
+      </div>
+
+      <div class="card-top mt-3">
+        <div class="card-title">
+          <i class="fa-solid fa-layer-group"></i>
+          <h5>{{ category.c_name }}</h5>
+        </div>
+      </div>
+
+      <div class="card-actions mt-2">
+        <button class="btn-edit" (click)="exploreCategory(category.c_id)">
+          Explore Product
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <ng-template #loadingTemplate>
+    <p>Loading categories...</p>
+  </ng-template>
+
+</div>

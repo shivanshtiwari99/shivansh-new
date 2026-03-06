@@ -1,0 +1,172 @@
+/* ================= PAGE CONTAINER ================= */
+.page-container {
+    width: 100%;
+}
+
+/* ================= HEADER ================= */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.category-count {
+    background: #e6f4f4;
+    color: #008080;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-box {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 220px;
+    outline: none;
+}
+
+.search-box:focus {
+    border-color: #008080;
+}
+
+/* ================= GRID CONTAINER ================= */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+/* ================= CATEGORY CARD ================= */
+.category-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 160px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-title i {
+    color: #008080;
+}
+
+.status-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    background: #e6f7ef;
+    color: #1f9254;
+}
+
+.category-card p {
+    margin: 8px 0;
+    color: #666;
+}
+
+/* ================= CARD ACTIONS ================= */
+.card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit, .btn-delete {
+    flex: 1;
+    text-align: center;
+    padding: 7px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: .3s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-edit {
+    background: #e6f4f4;
+    color: #008080;
+}
+
+.btn-edit:hover {
+    background: #d1eded;
+}
+
+.btn-delete {
+    background: #ffe8e8;
+    color: #d9534f;
+}
+
+.btn-delete:hover {
+    background: #ffd4d4;
+}
+
+/* ================= ADD BUTTON ================= */
+.btn-add {
+    background: #008080;
+    color: white;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: .3s;
+}
+
+.btn-add:hover {
+    background: #006666;
+}
+
+/* ================= MODAL INPUTS ================= */
+input.form-control {
+    border-radius: 6px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .search-box {
+        width: 100%;
+    }
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

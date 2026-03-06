@@ -1,0 +1,588 @@
+﻿@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div class="header-left">
+        <h2>All Products </h2>
+        <span class="total-badge"><span id="totalProducts">0</span> Total</span>
+    </div>
+
+    <div class="header-right">
+        <input type="text" id="searchProduct" placeholder="Search product..." />
+        <button data-bs-toggle="modal" id="addprod" data-bs-target="#exampleModal" class="add-btn">
+            <i class="fa-solid fa-plus"></i> Add Product
+        </button>
+    </div>
+</div>
+
+<div class="card-grid" id="product_container"></div>
+
+
+<!--Edit  Modal-->
+<div class="modal fade" id="editProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="editProductForm" enctype="multipart/form-data">
+
+                    <!-- Hidden Product ID -->
+                    <input type="hidden" id="edit_p_id" />
+
+                    <!-- Product Name -->
+                    <input type="text"
+                           id="edit_p_name"
+                           class="form-control mb-3"
+                           placeholder="Enter Product Name..." />
+
+                    <!-- Product Price -->
+                    <input type="number"
+                           id="edit_p_price"
+                           class="form-control mb-3"
+                           placeholder="Enter Product Price..." />
+
+                    <!-- Category -->
+                    <select id="edit_c_id"
+                            class="form-control mb-3">
+                        
+                    </select>
+
+                    <!-- Description -->
+                    <textarea id="edit_p_desc"
+                              class="form-control mb-3"
+                              placeholder="Description"></textarea>
+
+                    <!-- Old Product Picture (Readonly Path) -->
+                    <input type="text"
+                           id="old_p_picture"
+                           class="form-control mb-3"
+                           readonly
+                           placeholder="Old Image Path" />
+
+                    <!-- New Image Upload -->
+                    <input type="file"
+                           id="edit_p_picture"
+                           class="form-control mb-3" />
+                    <img id="preview_edit"
+                         style="width:120px; margin-top:10px; border-radius:8px; display:none;" />
+
+                    <center>
+                        <button type="button"
+                                id="updateProductBtn"
+                                class="btn btn-primary mt-3 w-50">
+                            Update Product
+                        </button>
+                    </center>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Add Modal-->
+<div class="row" id="modrow">
+    <div class="col-sm-10 mx-auto">
+        
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--Add Category Form-->
+                        <div class="row">
+                            <div class="col-sm-10 mx-auto mt-2 py-4 px-2 border border-3 rounded-3">
+                                <form method="post" enctype="multipart/form-data">
+                                    <input type="text" id="p_name" name="p_name" placeholder="Enter Product Name..." class="form-control mb-3" />
+                                    <input type="number" id="p_price" name="p_price" placeholder="Enter Product Price..." class="form-control mb-3" />
+                                    <select id="c_id" name="c_id" class="form-control mb-3">
+                                        <option>--Select Your Category--</option>
+                                    </select>
+                                    <textarea class="form-control mb-3" id="p_desc" placeholder="Description" name="p_desc"></textarea>
+                                    <input type="file" id="p_picture" name="p_picture" class="form-control mb-3" />
+                                    <img id="preview_add"
+                                         style="width:120px;height:100px; margin-top:10px; display:none; border-radius:8px;" />
+                                    <center>
+                                        <button type="button" id="addbtn" value="" class="btn btn-primary form-control mt-3 w-50">Add Product</button>
+                                    </center>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        //Load products
+        loadProducts();
+
+        function loadProducts() {
+            $.ajax({
+                url: '/api/AdminApi/products',
+                type: 'GET',
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                success: function (res) {
+
+                    let container = $("#product_container");
+                    container.empty();
+
+                    $("#totalProducts").text(res.length);
+
+                    $.each(res, function (index, ele) {
+
+                        let card = `
+                        <div class="card-item" data-name="${ele.p_name.toLowerCase()}">
+
+                            <div class="card-top">
+                                <div class="card-title">
+                                    <i class="fa-solid fa-industry"></i>
+                                    <h3 class="fs-5">${ele.p_name}</h3>
+                                </div>
+                                <span class="status-badge">Active</span>
+                            </div>
+
+                            <div class="price-badge">
+                                ₹ ${ele.p_price}
+                            </div>
+
+                            <p class="description">
+                                ${ele.p_desc}
+                            </p>
+
+                            <div class="card-actions">
+                                <button class="btn-edit edit-product" data-id="${ele.p_id}">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="btn-delete" data-id="${ele.p_id}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                        `;
+
+                        container.append(card);
+                    });
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to load products.", "error");
+                }
+            });
+        }
+
+
+        // Edit Product
+        $(document).on("click", ".edit-product", function () {
+
+            var pid = $(this).data("id");
+
+            
+            $.ajax({
+                url: '/api/Adminapi/categories',
+                type: 'GET',
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                success: function (catRes) {
+
+                    let container = $("#edit_c_id");
+                    container.empty();
+
+                    $.each(catRes, function (ind, ele) {
+                        container.append(`<option value="${ele.c_id}">${ele.c_name}</option>`);
+                    });
+
+                    
+                    $.ajax({
+                        url: "/api/AdminApi/idproduct?pid=" + pid,
+                        type: "GET",
+                        headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                        success: function (res) {
+
+                            let product = res[0];
+
+                            $("#edit_p_id").val(product.p_id);
+                            $("#edit_p_name").val(product.p_name);
+                            $("#edit_c_id").val(product.c_id);
+                            $("#edit_p_price").val(product.p_price);
+                            $("#edit_p_desc").val(product.p_desc);
+                            $("#old_p_picture").val(product.p_picture);
+                            $("#preview_edit").attr("src", product.p_picture).show();
+                            
+                            $("#edit_p_picture").val("");
+
+                            $("#editProductModal").modal("show");
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Failed to load product data.", "error");
+                        }
+                    });
+
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to load categories.", "error");
+                }
+            });
+        });
+
+
+        // UPDATE PRODUCT
+        $("#updateProductBtn").click(function () {
+
+            var formData = new FormData();
+
+            formData.append("p_id", $("#edit_p_id").val());
+            formData.append("p_name", $("#edit_p_name").val());
+            formData.append("p_price", $("#edit_p_price").val());
+            formData.append("c_id", $("#edit_c_id").val());
+            formData.append("p_desc", $("#edit_p_desc").val());
+            formData.append("p_picture", $("#old_p_picture").val());
+
+            var fileInput = $("#edit_p_picture")[0];
+            if (fileInput.files.length > 0) {
+                formData.append("imageFile", fileInput.files[0]);
+            }
+
+            $.ajax({
+                url: "/api/AdminApi/updateProduct",
+                type: "PUT",
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+
+                success: function (response) {
+                    Swal.fire({
+                        icon: "success",
+                        title: response
+                    }).then(() => {
+                        $("#editProductModal").modal("hide");
+                        $("#editProductForm")[0].reset();
+                        loadProducts();
+                    });
+                },
+                error: function () {
+                    Swal.fire("Error!", "Update failed!", "error");
+                }
+            });
+        });
+
+
+        //DELETE PRODUCT 
+        $(document).on("click", ".btn-delete", function () {
+            let pid = $(this).data("id");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "/api/adminapi/deleteProd?pid=" + pid,
+                        type: "DELETE",
+                        headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                        success: function (res) {
+                            Swal.fire("Deleted!", res, "success");
+                            loadProducts();
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Delete failed!", "error");
+                        }
+                    });
+
+                }
+            });
+        });
+
+
+        //ADD PRODUCT
+        $("#addbtn").click(function () {
+
+            var formData = new FormData();
+
+            formData.append("p_name", $("#p_name").val());
+            formData.append("p_price", $("#p_price").val());
+            formData.append("c_id", $("#c_id").val());
+            formData.append("p_desc", $("#p_desc").val());
+
+            var fileInput = $("#p_picture")[0];
+            if (fileInput.files.length > 0) {
+                formData.append("imageFile", fileInput.files[0]);
+            }
+
+            $.ajax({
+                url: "/api/Adminapi/addproduct",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+
+                    success: function (response) {
+
+        
+        let modalEl = document.getElementById('exampleModal');
+        let modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+
+        $("#exampleModal form")[0].reset();
+        loadProducts();
+
+        
+        Swal.fire({
+            icon: "success",
+            title: response
+        });
+    },
+                error: function () {
+                    Swal.fire("Error!", "Failed to add product.", "error");
+                }
+            });
+
+        });
+
+            $("#p_picture").on("change", function () {
+
+        let file = this.files[0];
+
+        if (file) {
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#preview_add")
+                    .attr("src", e.target.result)
+                    .show();
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+        // LOAD CATEGORY 
+        $("#addprod").click(function () {
+
+            $.ajax({
+                url: '/api/Adminapi/categories',
+                type: 'GET',
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                success: function (res) {
+
+                    let container = $("#c_id");
+                    container.empty();
+
+                    $.each(res, function (ind, ele) {
+                        container.append(`<option value="${ele.c_id}">${ele.c_name}</option>`);
+                    });
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to load categories.", "error");
+                }
+            });
+
+        });
+
+        $("#edit_p_picture").on("change", function () {
+
+            let file = this.files[0];
+
+            if (file) {
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                $("#preview_edit")
+                    .attr("src", e.target.result)
+                    .show();
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+        });
+        $('#editProductModal').on('hidden.bs.modal', function () {
+            $("#preview_edit").attr("src", "").hide();
+        });
+
+        
+        $("#searchProduct").on("keyup", function () {
+            let value = $(this).val().toLowerCase();
+
+            $(".card-item").filter(function () {
+                $(this).toggle($(this).data("name").includes(value));
+            });
+        });
+
+    });
+</script>
+<style>
+    body {
+        background: #f4f6f7;
+    }
+    
+    /* HEADER */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .header-left h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+    .total-badge {
+        background: #d4efdf;
+        color: #117a65;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    .header-right {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+        .header-right input {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            width: 220px;
+            font-size: 14px;
+        }
+
+    .add-btn {
+        background: #117a65;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    /* GRID */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
+    }
+
+    /* CARD */
+    .card-item {
+        background: #ffffff;
+        padding: 22px;
+        border-radius: 16px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    }
+
+    /* TOP */
+    .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .card-title i {
+            color: #117a65;
+            font-size: 18px;
+        }
+
+        .card-title h3 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+    .status-badge {
+        background: #d5f5e3;
+        color: #1e8449;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+    }
+
+    /* PRICE */
+    .price-badge {
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #2e86c1;
+    }
+
+    /* DESCRIPTION */
+    .description {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #555;
+        min-height: 30px;
+    }
+
+    /* ACTIONS */
+    .card-actions {
+        margin-top: 8px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        flex: 1;
+        padding: 6px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background: #d6eaf8;
+        color: #21618c;
+        border:none;
+    }
+
+    .btn-delete {
+        background: #f5b7b1;
+        color: #922b21;
+        border:none;
+    }
+</style>

@@ -1,0 +1,242 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<div class="page-container">
+
+    <!-- ================= HEADER ================= -->
+    <div class="page-header">
+
+        <div class="header-left">
+            <h2>Product Categories</h2>
+            <span class="category-count">0 Total</span>
+        </div>
+
+        <div class="header-right">
+            <input type="text" id="searchInput" placeholder="Search category..." class="search-box" />
+        </div>
+
+    </div>
+
+    <!-- ================= GRID CONTAINER ================= -->
+    <div class="category-grid" id="category_sec"></div>
+
+</div>
+
+
+
+<!-- ================= STYLES ================= -->
+<style>
+
+    .page-container {
+        width: 100%;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 250px; /* 🔹 Fixed height */
+        overflow: hidden;
+        border-radius: 20px;
+    }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+             /* 🔹 Image stretch nahi hogi */
+        }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .category-count {
+        background: #e6f4f4;
+        color: #008080;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .search-box {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 220px;
+        outline: none;
+    }
+
+        .search-box:focus {
+            border-color: #008080;
+        }
+
+    .btn-add {
+        background: #008080;
+        color: white;
+        padding: 9px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+        .btn-add:hover {
+            background: #006666;
+        }
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 20px;
+        width: 100%;
+    }
+
+    .category-card {
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 300px;
+    }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+    .card-top {
+        display:;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+        .card-title i {
+            color: #008080;
+        }
+
+    .card-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-edit, .btn-delete {
+        flex: 1;
+        text-align: center;
+        padding: 8px 0;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .btn-edit {
+        background: #e6f4f4;
+        color: #008080;
+    }
+
+        .btn-edit:hover {
+            background: #d1eded;
+        }
+</style>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        loadCategory();
+
+        
+        function loadCategory(){
+             $.ajax({
+            url: '/api/UserApi/categories',
+            type: 'GET',
+            headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+            success: function (res) {
+
+                let container = $("#category_sec");
+                container.empty();
+
+                if (res.length === 0) {
+                    container.html("<h4>No categories found.</h4>");
+                    return;
+                }
+
+                $.each(res, function (ind, ele) {
+
+                    let card = `
+                        <div class="category-card mb-3" data-name="${ele.c_name.toLowerCase()}">
+                            <div class="card-image">
+                                <img src=${ele.c_picture} alt="${ele.c_name}"/>
+                            </div>
+                            <div class="card-top mt-3">
+                                <div class="card-title">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                    <h5>${ele.c_name}</h3>
+                                </div>
+                            </div>
+                                <div class="card-actions mt-2">
+                                    <a href="/user/categoryproduct/?cid=${ele.c_id}" class="btn-edit">
+                                        Explore Product
+                                </a>
+                            </div>
+
+                        </div>
+                    `;
+
+                    container.append(card);
+                });
+
+                
+                $(".category-count").text(res.length + " Total");
+            },
+            error: function () {
+                Swal.fire("Error!", "Failed to load categories.", "error");
+            }
+        });
+        }
+       
+
+        
+        $("#searchInput").on("keyup", function () {
+
+            let value = $(this).val().toLowerCase();
+
+            $(".category-card").filter(function () {
+                $(this).toggle($(this).data("name").includes(value));
+            });
+
+        });
+
+       
+    });
+
+</script>

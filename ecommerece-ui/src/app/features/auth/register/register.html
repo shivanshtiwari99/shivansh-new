@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-sm-6 mx-auto border p-4 border-2 position-relative">
+      
+      <!-- Loader -->
+      <div *ngIf="loading" class="loader-overlay">
+        <div class="spinner"></div>
+      </div>
+
+      <h2 class="fw-bolder text-center">
+        Registration <span class="text-primary fw-bolder">Form</span>
+      </h2>
+
+      <hr class="w-75 mx-auto" />
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <input type="text" formControlName="name" class="form-control mb-3" placeholder="Enter Your Name..." />
+        <input type="email" formControlName="email" class="form-control mb-3" placeholder="Enter Your Email Id..." />
+        <input type="number" formControlName="password" class="form-control mb-3" placeholder="Enter Your Password..." />
+        <input type="string" formControlName="mobile" class="form-control mb-3" placeholder="Enter Your Mobile..." />
+        <input type="date" formControlName="dob" class="form-control mb-3" />
+
+        <div class="mb-3">
+          <input type="radio" value="Male" formControlName="gender" /> Male &nbsp;&nbsp;&nbsp;
+          <input type="radio" value="Female" formControlName="gender" /> Female
+        </div>
+
+        <div class="text-end mb-3">Already a User? <a routerLink="/login">Login</a></div>
+
+        <button type="submit" class="btn btn-primary d-block mx-auto w-50">
+          Register Now
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>

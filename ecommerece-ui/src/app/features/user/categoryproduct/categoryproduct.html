@@ -1,0 +1,68 @@
+<!-- category-product.component.html -->
+
+<div class="page-header">
+
+  <!-- HEADER LEFT -->
+  <div class="header-left">
+    <h2>All Products</h2>
+    <span class="total-badge"><span>{{ filteredProducts.length }}</span> Total</span>
+  </div>
+
+  <!-- HEADER RIGHT -->
+  <div class="header-right">
+    <input type="text" 
+           placeholder="Search product..." 
+           [(ngModel)]="searchText" 
+           (input)="filterProducts()" />
+  </div>
+
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="card-grid" *ngIf="!loading; else loadingTemplate">
+
+  <div *ngIf="filteredProducts.length === 0">
+    <h4>No products found.</h4>
+  </div>
+
+  <div *ngFor="let product of filteredProducts" class="card-item">
+    
+    <!-- IMAGE -->
+    <div class="card-image p-0 m-0">
+      <img [src]="'https://localhost:7071' + product.p_picture" 
+           [alt]="product.p_name" />
+    </div>
+
+    <!-- CARD TOP -->
+    <div class="card-top mt-3">
+      <div class="card-title">
+        <i class="fa-solid fa-industry"></i>
+        <h3 class="fs-5">{{ product.p_name }}</h3>
+      </div>
+    </div>
+
+    <!-- PRICE -->
+    <div class="price-badge">
+      ₹ {{ product.p_price }}
+    </div>
+
+    <!-- DESCRIPTION -->
+    <p class="description">
+      {{ product.p_desc }}
+    </p>
+
+    <!-- ACTIONS -->
+    <div class="card-actions">
+      <button class="btn-edit" (click)="addToCart(product)">
+        Add To Cart
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LOADING TEMPLATE -->
+<ng-template #loadingTemplate>
+  <p>Loading products...</p>
+</ng-template>

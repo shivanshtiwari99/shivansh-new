@@ -1,0 +1,105 @@
+﻿
+<html>
+<head>
+    <title>Ecommerce Website</title>
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="/Photos/Snap Logo.png" rel="icon">
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <script src="~/js/bootstrap.bundle.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    @* <a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <style>
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 9999;
+        }
+
+            #loader.active {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+        .loader-box {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 55px;
+            height: 55px;
+            border: 6px solid #e0f2f1;
+            border-top: 6px solid #117a65;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: auto;
+        }
+
+        #loader p {
+            margin-top: 12px;
+            font-weight: 500;
+            color: #117a65;
+            letter-spacing: 1px;
+        }
+
+        @@keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <div id="loader">
+        <div class="loader-box">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+    <!--Navbar-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Ecom</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="navbar-brand ms-5" href="#">Home</a>
+                                <a class="navbar-brand ms-5" href="#">Index</a>
+                                <a class="navbar-brand ms-5" href="#">About</a>
+                                <a class="navbar-brand ms-5" href="~/Home/Registration">Registration</a>
+                                <a class="navbar-brand ms-5" href="/home/Login">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+        <script>
+            $(document).ajaxStart(function () {
+            $("#loader").addClass("active");
+        });
+
+        $(document).ajaxStop(function () {
+            $("#loader").removeClass("active");
+        });
+        </script>
+</body>
+</html>

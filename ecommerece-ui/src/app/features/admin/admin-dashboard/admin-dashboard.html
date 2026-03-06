@@ -1,0 +1,69 @@
+<!-- Welcome / Header -->
+<div class="dashboard-header">
+  <h2>Welcome, Admin!</h2>
+  <p>Check your e-commerce store overview below:</p>
+</div>
+
+<div *ngIf="loading" class="text-center mb-4">Loading dashboard...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<!-- Dashboard Cards -->
+<div class="cards">
+  <div class="card" (click)="navigate('/category')">
+    <div class="mx-auto ">
+      <i class="fa-solid fa-tags"></i>
+    </div>
+    
+    <h3>{{ stats.totalCategories }}</h3>
+    <p>Categories</p>
+  </div>
+
+  <div class="card" (click)="navigate('/product')">
+    <div class="mx-auto "><i class="fa-solid fa-box"></i></div>
+    
+    <h3>{{ stats.totalProducts }}</h3>
+    <p>Total Products</p>
+  </div>
+
+  <div class="card" (click)="navigate('/user')">
+    <div class="mx-auto "><i class="fa-solid fa-user"></i></div>
+    
+    <h3>{{ stats.totalUsers }}</h3>
+    <p>Total Users</p>
+  </div>
+
+  <div class="card" (click)="navigate('/admin/breached-products')">
+    <div class="mx-auto "><i class="fa-solid fa-triangle-exclamation"></i></div>
+    
+    <h3>5</h3>
+    <p>Breached Products</p>
+  </div>
+
+  <!-- New Static Card -->
+  <div class="card" (click)="navigate('/admin/pending-reviews')">
+    <div class="mx-auto ">
+      <i class="fa-solid fa-star-half-alt"></i>
+    </div>
+    
+    <h3>12</h3>
+    <p>Pending Reviews</p>
+  </div>
+</div>
+
+<!-- Charts Section -->
+<div class="chart-section">
+  <div class="chart-box">
+    <h4>Revenue Overview</h4>
+    <canvas id="revenueChart"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h4>Orders & Sales Analytics</h4>
+    <canvas id="ordersSalesChart"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h4>Top Categories Performance</h4>
+    <canvas id="categoryPerformanceChart"></canvas>
+  </div>
+</div>

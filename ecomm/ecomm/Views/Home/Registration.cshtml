@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-sm-6 mx-auto border p-4 border-2">
+            <h2 class="fw-bolder text-center">Student <span class="text-primary fw-bolder">Registration Form</span> </h2>
+            <hr class="w-75 mx-auto" />
+            <form method="post" id="form">
+
+                <input type="text" id="name" name="name" class="form-control mb-3" placeholder="Enter Your Name..." />
+
+                <input type="email" id="email" name="email" class="form-control mb-3" placeholder="Enter Your Email Id..." />
+
+                <input type="password" id="password" name="password" class="form-control mb-3" placeholder="Enter Your Password..." />
+
+                <input type="number" id="mobile" name="mobile" class="form-control mb-3" placeholder="Enter Your Mobile..." />
+
+                <input type="date" name="dob" id="dob" class="form-control mb-3" placeholder="Enter Your Date Of Birth..." />
+
+                <input type="radio" id="gender" name="gender" value="Male" /> Male &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="gender" name="gender" value="Female" /> Female &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <center>
+                    <input type="button" id="btn" class="btn btn-primary mt-3 w-50 text-center" value="Register Now" />
+                </center>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (){
+        $("#btn").click(function(e){
+
+            e.preventDefault()
+            var userData = {
+                name: $("#name").val(),
+                email: $("#email").val(),
+                password: $("#password").val(),
+                mobile: $("#mobile").val(),
+                dob: $("#dob").val(),
+                gender: $("#gender").val()
+            };
+            $.ajax({
+                url:'/api/HomeApi/Register',
+                type:'POST',
+                contentType:'application/json',
+                data:JSON.stringify(userData),
+                success:function(res)
+                {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Welcome",
+                        text: res,
+                        footer: '<a href="#"></a>'
+                    });
+                    $("#form").trigger("reset");
+                },
+                error:function()
+                {
+                    console.log("error")
+                    $("#form").trigger("reset");
+                }
+            })
+        })
+    })
+</script>
