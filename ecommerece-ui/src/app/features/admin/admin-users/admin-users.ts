@@ -1,24 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-
-interface User {
-  u_id: number;
-  name: string;
-  email: string;
-  password?: number;
-  mobile: string;
-  dob: string;
-  gender: string;
-  role?: string;
-}
+import { AdminService, User } from '../../../services/adminservices';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-users',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './admin-users.html',
   styleUrls: ['./admin-users.css']
 })
@@ -29,7 +19,6 @@ export class AdminUsers implements OnInit {
   loading = false;
   searchText = '';
 
-  // EDIT
   editId?: number;
   editName = '';
   editEmail = '';
@@ -37,28 +26,16 @@ export class AdminUsers implements OnInit {
   editGender = '';
   editDob = '';
 
-  private apiUrl = 'https://localhost:7071/api/AdminApi';
-
-  constructor(private http: HttpClient) {}
+  constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
-  get headers() {
-    return new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token') || ''}`
-    });
-  }
-
   // ================= LOAD =================
   loadUsers() {
     this.loading = true;
-
-    this.http.get<User[]>(
-      `${this.apiUrl}/users`,
-      { headers: this.headers }
-    ).subscribe({
+    this.adminService.getUsers().subscribe({
       next: res => {
         this.users = res;
         this.filteredUsers = res;
@@ -72,7 +49,6 @@ export class AdminUsers implements OnInit {
     });
   }
 
-  // ================= SEARCH =================
   filterUsers() {
     const val = this.searchText.toLowerCase();
     this.filteredUsers = this.users.filter(u =>
@@ -80,23 +56,16 @@ export class AdminUsers implements OnInit {
     );
   }
 
-  // ================= OPEN EDIT =================
   openEdit(user: User) {
     this.editId = user.u_id;
     this.editName = user.name;
     this.editEmail = user.email;
     this.editMobile = user.mobile;
     this.editGender = user.gender;
-
-    if (user.dob) {
-      const date = new Date(user.dob);
-      this.editDob = date.toISOString().split('T')[0];
-    }
+    if (user.dob) this.editDob = new Date(user.dob).toISOString().split('T')[0];
   }
 
-  // ================= UPDATE =================
   saveEdit() {
-
     if (!this.editId) return;
 
     const userObj = {
@@ -108,23 +77,11 @@ export class AdminUsers implements OnInit {
       dob: this.editDob
     };
 
-    this.http.put(
-      `${this.apiUrl}/updateuser`,
-      userObj,
-      {
-        headers: this.headers,
-        responseType: 'text'
-      }
-    ).subscribe({
+    this.adminService.updateUser(userObj).subscribe({
       next: () => {
         Swal.fire('Success!', 'User updated successfully', 'success');
+        this.resetEditForm();
         this.loadUsers();
-        this.editId = undefined;
-        this.editName = '';
-        this.editEmail = '';
-        this.editMobile = '';
-        this.editGender = '';
-        this.editDob = '';
       },
       error: err => {
         console.error(err);
@@ -133,9 +90,7 @@ export class AdminUsers implements OnInit {
     });
   }
 
-  // ================= DELETE =================
   deleteUser(id: number) {
-
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -143,16 +98,8 @@ export class AdminUsers implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
-
       if (result.isConfirmed) {
-
-        this.http.delete(
-          `${this.apiUrl}/deleteUser?uid=${id}`,
-          {
-            headers: this.headers,
-            responseType: 'text'
-          }
-        ).subscribe({
+        this.adminService.deleteUser(id).subscribe({
           next: () => {
             Swal.fire('Deleted!', 'User deleted', 'success');
             this.loadUsers();
@@ -162,9 +109,16 @@ export class AdminUsers implements OnInit {
             Swal.fire('Error!', 'Delete failed!', 'error');
           }
         });
-
       }
-
     });
+  }
+
+  private resetEditForm() {
+    this.editId = undefined;
+    this.editName = '';
+    this.editEmail = '';
+    this.editMobile = '';
+    this.editGender = '';
+    this.editDob = '';
   }
 }

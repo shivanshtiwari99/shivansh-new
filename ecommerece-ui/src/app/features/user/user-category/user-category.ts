@@ -1,16 +1,9 @@
-// user-category.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
-interface Category {
-  c_id: number;
-  c_name: string;
-  c_picture?: string;
-}
+import Swal from 'sweetalert2';
+import { UserService , Category } from '../../../services/userservices';
 
 @Component({
   selector: 'app-user-category',
@@ -23,12 +16,10 @@ export class UserCategory implements OnInit {
 
   categories: Category[] = [];
   filteredCategories: Category[] = [];
-  searchText: string = '';
-  loading: boolean = false;
+  searchText = '';
+  loading = false;
 
-  private apiUrl = 'https://localhost:7071/api/UserApi/categories'; // Update your API URL
-
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -37,17 +28,14 @@ export class UserCategory implements OnInit {
   loadCategories() {
     this.loading = true;
 
-    const token = localStorage.getItem('token') || '';
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http.get<Category[]>(this.apiUrl, { headers }).subscribe({
-      next: (res) => {
+    this.userService.getCategories().subscribe({
+      next: res => {
         this.categories = res;
         this.filteredCategories = res;
         this.loading = false;
       },
-      error: (err) => {
-        console.error('Failed to load categories', err);
+      error: err => {
+        console.error(err);
         Swal.fire('Error!', 'Failed to load categories.', 'error');
         this.loading = false;
       }
@@ -62,7 +50,6 @@ export class UserCategory implements OnInit {
   }
 
   exploreCategory(c_id: number) {
-    // Navigate to category product page with cid query param
     this.router.navigate(['/cProduct'], { queryParams: { cid: c_id } });
   }
 }

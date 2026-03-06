@@ -1,20 +1,30 @@
-<div class="container mt-4 text-center">
+<div class="container mt-4">
 
   <!-- HEADER -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Products</h3>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-      Add Product
-    </button>
-  </div>
-
-  <!-- SEARCH -->
-  <div class="mb-3">
-    <input type="text"
+  <div class="row mb-4">
+    <div class="col-sm-6">
+      <h3 class="d-inline">Products </h3>
+      <span class="category-count "> {{ products.length }} Total</span>
+    </div>
+    <div class="col-sm-4 text-end">
+      <input type="text"
            class="form-control"
            placeholder="Search product..."
            [(ngModel)]="searchText"
            (keyup)="filterProducts()">
+          </div>
+    <div class="col-sm-2 text-end">
+      <button style="background-color: #008080;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+       <i class="fa-solid fa-plus"></i>  Add Product <span class="fs-"> </span>
+      </button>
+    </div>
+    
+    
+  </div>
+
+  <!-- SEARCH -->
+  <div class="mb-3">
+    
   </div>
 
   <!-- LOADING -->
@@ -24,7 +34,7 @@
 
   <!-- PRODUCT TABLE -->
   <div class="table-responsive" *ngIf="!loading">
-    <table class="table table-bordered table-hover align-middle">
+    <table class="table table-bordered text-center table-hover align-middle">
       <thead class="table-dark">
         <tr>
           <th>Image</th>
@@ -49,16 +59,16 @@
           <td>{{ p.c_name }}</td>
           <td>{{ p.p_desc }}</td>
           <td>
-            <button class="btn btn-sm btn-warning me-2"
+            <button class="btn btn-edit btn-sm btn-warning me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#editModal"
                     (click)="openEdit(p)">
-              Edit
+              <i class="fa-solid fa-pen"></i>
             </button>
 
-            <button class="btn btn-sm btn-danger"
+            <button class="btn btn-delete btn-sm btn-danger"
                     (click)="deleteProduct(p.p_id)">
-              Delete
+               <i class="fa-solid fa-trash"></i>
             </button>
           </td>
         </tr>
@@ -73,7 +83,7 @@
 <div class="modal fade" id="addModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
+      <div style="background-color: #008080;" class="modal-header text-white">
         <h5 class="modal-title">Add Product</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -114,7 +124,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="addProduct()">Save</button>
+        <button style="background-color: #008080;" class="btn btn-primary" data-bs-dismiss="modal" (click)="addProduct()">Save</button>
       </div>
 
     </div>
@@ -127,7 +137,7 @@
 <div class="modal fade" id="editModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-warning">
+      <div class="modal-header " style="background-color: #008080;">
         <h5 class="modal-title">Edit Product</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -161,6 +171,11 @@
         <div class="mb-3">
           <label>Image</label>
           <input type="file" class="form-control" (change)="onEditFileChange($event)">
+          
+        </div>
+        <div class="mb-3">
+          <label>Current Image</label>
+          <input type="text" [(ngModel)]="editOldImage" class="form-control" readonly >
         </div>
 
         <div class="mb-2" *ngIf="editOldImage">
@@ -174,7 +189,7 @@
 
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-warning" data-bs-dismiss="modal" (click)="saveEdit()">Update</button>
+        <button class="btn text-light" style="background-color: #61e2e2;" data-bs-dismiss="modal" (click)="saveEdit()">Update</button>
       </div>
 
     </div>

@@ -50,7 +50,7 @@
         <input type="file" (change)="onAddFileChange($event)" class="form-control mb-3">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="addCategory()">Add</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addCategory()">Add</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
@@ -67,10 +67,11 @@
       </div>
       <div class="modal-body">
         <input type="text" [(ngModel)]="editName" class="form-control mb-3" placeholder="Category Name">
-        <input type="file" (change)="onEditFileChange($event)" class="form-control mb-3">
+        <input type="file"  (change)="onEditFileChange($event)" class="form-control mb-3">
+         <input type="text" [(ngModel)]="editOldImage" readonly class="form-control mb-3">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="saveEdit()">Save Changes</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveEdit()">Save Changes</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
