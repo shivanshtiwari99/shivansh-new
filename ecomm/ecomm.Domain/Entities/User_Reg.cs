@@ -12,7 +12,7 @@ namespace ecomm.Domain.Entities
         public int? u_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
-        public int password { get; set; }   // <-- changed to string
+        public int password { get; set; }  
         public string mobile { get; set; }
         public DateTime? dob { get; set; }
         public string gender { get; set; }

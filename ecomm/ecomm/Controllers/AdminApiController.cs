@@ -21,7 +21,7 @@ namespace ecomm.Controllers
             _prod = prod;
         }
         
-        
+         //user Api
         [HttpGet("users")]
         public IActionResult AllUser()
         {
@@ -116,10 +116,12 @@ namespace ecomm.Controllers
                 {
                     file.CopyTo(stream);
                 }
+                model.c_picture = "/Photos/Category/" + fileName;
             }
-
-            
-            model.c_picture = "/Photos/Category/" + fileName;
+            else
+            {
+                model.c_picture = fileName;
+            }
 
             _categ.UpdateCategory(model);
 
@@ -147,7 +149,7 @@ namespace ecomm.Controllers
             return Ok("Category Deleted Successfully");
         }
 
-        //User APIs 
+        //Product APIs 
         [HttpPost("addproduct")]
         public IActionResult AddProduct([FromForm] Product prod, [FromForm] IFormFile imageFile)
         {
