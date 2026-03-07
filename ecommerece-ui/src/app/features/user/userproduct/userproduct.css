@@ -75,7 +75,7 @@
 
     /* CARD */
     .card-item {
-        background: #ffffff;
+        background: #f7f6f6;
         padding: 22px;
         border-radius: 16px;
         box-shadow: 0 6px 15px rgba(0,0,0,0.05);
@@ -149,4 +149,7 @@
     .btn-edit {
         background: #d6eaf8;
         color: #21618c;
+    }
+    button{
+        border: none;
     }

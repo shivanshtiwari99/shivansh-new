@@ -1,9 +1,8 @@
-/* ================= PAGE CONTAINER ================= */
+
 .page-container {
     width: 100%;
 }
 
-/* ================= HEADER ================= */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -46,7 +45,6 @@
     border-color: #008080;
 }
 
-/* ================= GRID CONTAINER ================= */
 .category-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -54,7 +52,6 @@
     width: 100%;
 }
 
-/* ================= CATEGORY CARD ================= */
 .category-card {
     background: white;
     padding: 18px;
@@ -103,7 +100,7 @@
     color: #666;
 }
 
-/* ================= CARD ACTIONS ================= */
+
 .card-actions {
     display: flex;
     gap: 10px;
@@ -138,7 +135,7 @@
     background: #ffd4d4;
 }
 
-/* ================= ADD BUTTON ================= */
+/*  ADD BUTTON  */
 .btn-add {
     background: #008080;
     color: white;
@@ -152,12 +149,12 @@
     background: #006666;
 }
 
-/* ================= MODAL INPUTS ================= */
+
 input.form-control {
     border-radius: 6px;
 }
 
-/* ================= RESPONSIVE ================= */
+
 @media (max-width: 768px) {
     .category-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

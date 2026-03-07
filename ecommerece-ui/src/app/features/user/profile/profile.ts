@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit {
 
     if (this.modalOpen) {
       this.editUser = { ...this.user };
+      this.editUser.dob=(this.editUser.dob).split('T')[0];
     }
 
   }

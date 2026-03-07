@@ -34,7 +34,7 @@ export class AdminCategory implements OnInit {
     this.loadCategories();
   }
 
-  // ================= LOAD =================
+  // LOAD
   loadCategories() {
     this.loading = true;
     this.adminService.getCategories().subscribe({
@@ -58,7 +58,7 @@ export class AdminCategory implements OnInit {
     );
   }
 
-  // ================= ADD =================
+  // ADD 
   addCategory() {
     this.adminService.addCategory(this.addName, this.addFile).subscribe({
       next: () => {
@@ -78,7 +78,7 @@ export class AdminCategory implements OnInit {
     this.addFile = event.target.files[0];
   }
 
-  // ================= EDIT =================
+  //  EDIT 
   openEdit(category: Category) {
     this.editId = category.c_id;
     this.editName = category.c_name;
@@ -111,7 +111,7 @@ export class AdminCategory implements OnInit {
       });
   }
 
-  // ================= DELETE =================
+  //  DELETE 
   deleteCategory(id: number) {
     Swal.fire({
       title: 'Are you sure?',
