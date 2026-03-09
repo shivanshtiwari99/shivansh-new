@@ -40,30 +40,41 @@
   </div>
 
   <!-- New Static Card -->
-  <div class="card" (click)="navigate('/admin/pending-reviews')">
+  <!-- <div class="card" (click)="navigate('/admin/pending-reviews')">
     <div class="mx-auto ">
       <i class="fa-solid fa-star-half-alt"></i>
     </div>
     
     <h3>12</h3>
     <p>Pending Reviews</p>
-  </div>
+  </div> -->
 </div>
 
 <!-- Charts Section -->
+
 <div class="chart-section">
-  <div class="chart-box">
+   <div class="row">
+  <div class="col-md-4">
+    <div class="chart-box">
     <h4>Revenue Overview</h4>
     <canvas id="revenueChart"></canvas>
   </div>
-
-  <div class="chart-box">
+  </div>
+  <div class="col-md-4">
+    <div class="chart-box">
     <h4>Orders & Sales Analytics</h4>
     <canvas id="ordersSalesChart"></canvas>
   </div>
-
-  <div class="chart-box">
+  </div>
+  <div class="col-md-4">
+     <div class="chart-box">
     <h4>Top Categories Performance</h4>
     <canvas id="categoryPerformanceChart"></canvas>
   </div>
+  </div>
+ </div>
+
+  
+
+ 
 </div>

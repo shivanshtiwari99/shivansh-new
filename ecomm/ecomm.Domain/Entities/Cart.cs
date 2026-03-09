@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ecomm.Domain.Entities
 {
-    public class Cart
+     public class Cart
     {
+       
     }
 }

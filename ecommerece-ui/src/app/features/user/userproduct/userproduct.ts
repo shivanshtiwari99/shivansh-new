@@ -17,11 +17,13 @@ export class AllProduct implements OnInit {
   filteredProducts: Product[] = [];
   searchText = '';
   loading = false;
-
-  constructor(private userService: UserService) {}
+  
+  constructor(private userService: UserService) {
+    this.loadProducts();
+  }
 
   ngOnInit(): void {
-    this.loadProducts();
+    
   }
 
   loadProducts() {
@@ -41,9 +43,7 @@ export class AllProduct implements OnInit {
         Swal.fire('Error!', 'Failed to load products.', 'error');
         this.loading = false;
       }
-
     });
-
   }
 
   filterProducts() {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth';
 import { Router, RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +34,10 @@ export class Login {
 
             if (role === 'admin') {
               this.router.navigate(['/admin-dashboard']);
+              Swal.fire('Success','Admin Login Successfully','success')
             } else if (role === 'user') {
               this.router.navigate(['/userCategory']);
+              Swal.fire('Success','User Login Successfully','success')
             } else {
               this.router.navigate(['/login']);
             }

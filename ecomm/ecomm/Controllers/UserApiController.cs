@@ -24,7 +24,6 @@ namespace ecomm.Controllers
             
         }
 
-        
         [HttpGet("emailuser")]
         public IActionResult GetUserByEmail(string? email)
         {
