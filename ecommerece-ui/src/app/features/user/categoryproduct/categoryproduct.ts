@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { UserService , Product } from '../../../services/userservices';
 
+
 @Component({
   selector: 'app-category-product',
   standalone: true,
@@ -29,16 +30,14 @@ export class CategoryProduct implements OnInit {
 
     this.route.queryParams.subscribe(params => {
 
-      this.categoryId = +params['cid'] || 0;
+      this.categoryId= +params['cid']||0;
 
       if (this.categoryId) {
         this.loadProducts();
       } else {
         Swal.fire('Error', 'Category ID not found', 'error');
       }
-
-    });
-
+    }); 
   }
 
   loadProducts() {
@@ -58,9 +57,7 @@ export class CategoryProduct implements OnInit {
         Swal.fire('Error!', 'Failed to load products.', 'error');
         this.loading = false;
       }
-
     });
-
   }
 
   filterProducts() {
@@ -70,11 +67,10 @@ export class CategoryProduct implements OnInit {
     this.filteredProducts = this.products.filter(p =>
       p.p_name.toLowerCase().includes(value)
     );
-
   }
 
   addToCart(product: Product) {
-    Swal.fire('Info', `${product.p_name} added to cart (demo)`, 'info');
+    Swal.fire('Added', `${product.p_name} added to cart (demo)`, 'success');
   }
 
 }

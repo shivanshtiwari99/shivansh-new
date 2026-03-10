@@ -120,3 +120,10 @@
 .btn-edit:hover {
     background: #d1eded;
 }
+.btn-cart{
+   background: #008080;
+    color: #ffffff;
+    border:none;
+    padding:10px;
+    border-radius:20px;
+}

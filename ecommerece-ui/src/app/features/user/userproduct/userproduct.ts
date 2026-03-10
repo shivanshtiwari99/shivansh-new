@@ -53,7 +53,6 @@ export class AllProduct implements OnInit {
     this.filteredProducts = this.products.filter(p =>
       p.p_name.toLowerCase().includes(value)
     );
-
   }
 
   addToCart(product: Product) {

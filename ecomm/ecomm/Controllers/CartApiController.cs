@@ -16,11 +16,18 @@ namespace ecomm.Controllers
         {
             _cart = cart;
         }
-        [HttpPost("Add")]
+        [HttpPost("AddCartItmes")]
         public IActionResult AddToCart([FromBody] CartItems item)
         {
             _cart.AddToCart(item);
+            
             return Ok("Product added to cart");
+        }
+        [HttpPost("AddCart")]
+        public IActionResult AddCart([FromBody] Cart cart)
+        {
+            _cart.AddCart(cart);
+            return Ok("Cart Created");
         }
 
     }

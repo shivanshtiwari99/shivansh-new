@@ -52,4 +52,5 @@ export class UserCategory implements OnInit {
   exploreCategory(c_id: number) {
     this.router.navigate(['/cProduct'], { queryParams: { cid: c_id } });
   }
+  
 }

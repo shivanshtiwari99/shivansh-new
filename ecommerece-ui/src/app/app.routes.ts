@@ -13,6 +13,7 @@ import { UserCategory } from './features/user/user-category/user-category';
 import { CategoryProduct } from './features/user/categoryproduct/categoryproduct';
 import { AllProduct } from './features/user/userproduct/userproduct';
 import { ProfileComponent } from './features/user/profile/profile';
+import { CartComponent } from './features/user/cart/cart';
 
 export const routes: Routes = [
 
@@ -55,6 +56,7 @@ export const routes: Routes = [
       {path:'cProduct',component:CategoryProduct},
       {path:'userProduct',component:AllProduct},
       {path:'profile',component:ProfileComponent},
+      {path:'cart',component:CartComponent},
       // aur user ke aur pages add kar sakte ho
     ]
   }

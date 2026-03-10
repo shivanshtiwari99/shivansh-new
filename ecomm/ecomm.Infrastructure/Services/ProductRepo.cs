@@ -135,6 +135,7 @@ namespace ecomm.Infrastructure.Services
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand("sp_product", con);
+                
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@action", 4);
                 cmd.Parameters.AddWithValue("@p_id", pid);

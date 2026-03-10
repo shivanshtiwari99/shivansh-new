@@ -107,7 +107,4 @@ export class AdminService {
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteUser?uid=${id}`, { headers: this.headers, responseType: 'text' });
   }
-
-
-  
 }

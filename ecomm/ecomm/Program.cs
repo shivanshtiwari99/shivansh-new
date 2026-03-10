@@ -14,6 +14,7 @@ builder.Services.AddScoped<ICategoryServies, CategoryRepo>();
 builder.Services.AddScoped<IProductServices, ProductRepo>();
 builder.Services.AddScoped<IProductServices, ProductRepo>();
 builder.Services.AddScoped<ICartServices, CartRepo>();
+builder.Services.AddScoped<ICartServices, CartRepo>();
 
 builder.Services.AddCors(options =>
 {
@@ -70,7 +71,6 @@ app.UseRouting();
 
 app.UseCors("AllowAngular");
 
-// ✅ Important: Authentication before Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

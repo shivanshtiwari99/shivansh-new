@@ -11,7 +11,7 @@ using ecomm.Application.Interfaces;
 
 namespace ecomm.Infrastructure.Services
 {
-    public class CartRepo:ICartServices
+    public class CartRepo : ICartServices
     {
         private readonly string? _connectionString;
 
@@ -33,8 +33,21 @@ namespace ecomm.Infrastructure.Services
                 cmd.Parameters.AddWithValue("@price", item.Price);
 
                 con.Open();
-                int res=cmd.ExecuteNonQuery();
+                int res = cmd.ExecuteNonQuery();
                 return res;
+            }
+        }
+        public int AddCart(Cart cart)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                using SqlCommand cmd = new SqlCommand("sp_cart", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@action", 1);
+                cmd.Parameters.AddWithValue("@u_id", cart.u_id);
+                con.Open();
+                int res = cmd.ExecuteNonQuery();
+                return res; 
             }
         }
     }

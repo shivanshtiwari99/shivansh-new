@@ -9,6 +9,7 @@ namespace ecomm.Application.Interfaces
 {
     public interface ICartServices
     {
+        int AddCart(Cart cart);
         int AddToCart(CartItems item);
         //int UpdateCartItem(CartItems item);
         //int DeleteCartItem(int cartItemId);

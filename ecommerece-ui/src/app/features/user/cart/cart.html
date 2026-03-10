@@ -1,0 +1,135 @@
+<div class="cart-page py-4">
+
+<div class="container">
+
+<h3 class="mb-4 fw-bold text-teal">Shopping Cart</h3>
+
+<!-- EMPTY CART -->
+<div *ngIf="cartItems.length === 0" class="empty-cart text-center p-5">
+
+<i class="bi bi-cart-x empty-icon"></i>
+
+<h4 class="mt-3">Your Cart is Empty</h4>
+
+<p class="text-muted">Looks like you haven't added anything yet</p>
+
+<button class="btn btn-teal mt-2">
+Continue Shopping
+</button>
+
+</div>
+
+<!-- CART ITEMS -->
+
+<div *ngIf="cartItems.length > 0" class="row">
+
+<div class="col-lg-8">
+
+<div class="card cart-card mb-3" *ngFor="let item of cartItems">
+
+<div class="card-body">
+
+<div class="row align-items-center">
+
+<div class="col-md-2 col-4">
+
+<img [src]="item.image" class="img-fluid product-img">
+
+</div>
+
+<div class="col-md-4 col-8">
+
+<h6 class="fw-semibold">{{item.name}}</h6>
+
+<p class="price">₹{{item.price}}</p>
+
+</div>
+
+<div class="col-md-3 col-6 mt-2 mt-md-0">
+
+<div class="qty-box">
+
+<button class="btn btn-sm btn-outline-secondary"
+(click)="decrease(item)">-</button>
+
+<span class="px-3">{{item.qty}}</span>
+
+<button class="btn btn-sm btn-outline-secondary"
+(click)="increase(item)">+</button>
+
+</div>
+
+</div>
+
+<div class="col-md-2 col-4 text-end">
+
+<h6 class="fw-bold">
+₹{{item.price * item.qty}}
+</h6>
+
+</div>
+
+<div class="col-md-1 col-2 text-end">
+
+<button class="btn btn-sm btn-danger"
+(click)="remove(item.id)">
+x
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SUMMARY -->
+
+<div class="col-lg-4">
+
+<div class="card summary-card">
+
+<div class="card-body">
+
+<h5 class="fw-bold mb-3">Order Summary</h5>
+
+<div class="d-flex justify-content-between mb-2">
+<span>Subtotal</span>
+<span>₹{{getTotal()}}</span>
+</div>
+
+<div class="d-flex justify-content-between mb-2">
+<span>Delivery</span>
+<span class="text-success">Free</span>
+</div>
+
+<hr>
+
+<div class="d-flex justify-content-between fw-bold">
+
+<span>Total</span>
+
+<span class="text-teal">
+₹{{getTotal()}}
+</span>
+
+</div>
+
+<button class="btn btn-teal w-100 mt-3">
+Proceed to Checkout
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
