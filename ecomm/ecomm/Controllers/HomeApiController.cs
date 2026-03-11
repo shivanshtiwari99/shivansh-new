@@ -25,13 +25,12 @@ namespace ecomm.Controllers
         [HttpPost("Register")]
         public IActionResult Register([FromBody] User_Reg user)
         {
-            _user.AddUser(user);
-            return Ok("User Registered Successfully");
+            int res=_user.AddUser(user);
+            return Ok(res);
         }
         [HttpPost("Login")]
         public IActionResult Login([FromBody] Login list)
         {
-            
             var userData = _user.Login(list); 
 
             if (userData.Count == 0)

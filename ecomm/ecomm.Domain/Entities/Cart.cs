@@ -8,8 +8,8 @@ namespace ecomm.Domain.Entities
 {
     public class Cart
     {
-        public int cart_id{ get; set; }
+        public int cart_id { get; set; }
         public int u_id { get; set; }
-        public DateTime c_date { get; set; }
+        public DateTime created_at { get; set; }
     }
 }

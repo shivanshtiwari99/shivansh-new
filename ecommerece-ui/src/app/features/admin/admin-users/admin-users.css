@@ -1,0 +1,27 @@
+.btn-edit, .btn-delete {
+    /* flex: ; */
+    text-align: center;
+    /* padding: ; */
+    border-radius: 6px;
+    font-size: 14px;
+    transition: .3s;
+    cursor: pointer;
+    border: none;
+}
+.btn-edit {
+    background: #e6f4f4;
+    color: #008080;
+}
+
+.btn-edit:hover {
+    background: #d1eded;
+}
+
+.btn-delete {
+    background: #ffe8e8;
+    color: #d9534f;
+}
+
+.btn-delete:hover {
+    background: #ffd4d4;
+}

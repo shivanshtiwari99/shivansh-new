@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../services/auth';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +21,7 @@ export class Register {
 
   private apiUrl = 'https://localhost:7071/api/HomeApi/Register'; // backend URL
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient,private authService:AuthService) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -32,41 +33,42 @@ export class Register {
   }
 
   onSubmit() {
-    if (!this.registerForm.valid) {
-      this.registerForm.markAllAsTouched();
-      Swal.fire({
+
+  if (this.registerForm.invalid) {
+    this.registerForm.markAllAsTouched();
+    Swal.fire({
         icon: 'warning',
-        title: 'Incomplete!',
-        text: 'Please fill all fields correctly.',
+        title: 'Warning',
+        text: 'Fill all fields correctly'
       });
-      return;
-    }
-
-    const payload = this.registerForm.value;
-    this.loading = true;
-  
-    console.log(payload,"adj")
-     try {
-    const res: any =  this.http.post(this.apiUrl, payload);
-    console.log("Response:", res);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Welcome!',
-      text: res?.message || 'Registration Successful!',
-    });
-    this.registerForm.reset();
-  } catch (err: any) {
-    console.error(err);
-
-    const msg = err?.error?.message || 'Registration failed. Check your inputs.';
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops!',
-      text: msg,
-    });
-  } finally {
-    this.loading = false;
+    return;
   }
+
+  const payload = this.registerForm.value;
+
+  this.authService.register(payload).subscribe({
+    next: (res:any) => {
+      console.log(res);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Registration Successful'
+      });
+
+      this.registerForm.reset();
+    },
+
+    error: (err) => {
+      console.error(err);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Registration failed'
+      });
+    }
+  });
+
 }
 }

@@ -8,10 +8,13 @@ namespace ecomm.Domain.Entities
 {
     public class CartItems
     {
-        public int? CartItemId { get; set; }
-        public int CartId { get; set; }
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-        public int Price { get; set; }
+        public int cartitem_id { get; set; }
+        public int cart_id { get; set; }
+        public int p_id { get; set; }
+        public int quantity { get; set; }
+        public string? p_picture { get; set; }
+        public string p_name { get; set; }
+        public int p_price { get; set; }
+
     }
 }

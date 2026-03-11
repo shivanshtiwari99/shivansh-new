@@ -33,7 +33,7 @@ export class AdminCategory implements OnInit {
   ngOnInit() {
     this.loadCategories();
   }
-
+  
   // LOAD
   loadCategories() {
     this.loading = true;

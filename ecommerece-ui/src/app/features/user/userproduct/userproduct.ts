@@ -56,7 +56,31 @@ export class AllProduct implements OnInit {
   }
 
   addToCart(product: Product) {
-    Swal.fire('Info', `${product.p_name} added to cart (demo)`, 'info');
-  }
+
+  const email = this.userService.getEmailFromToken();
+
+  this.userService.getUserByEmail(email).subscribe(user => {
+
+    const u_id = user[0].u_id;
+
+   this.userService.addToCart(u_id, product.p_id, 1).subscribe(res=>{
+
+if(res==1){
+Swal.fire('Success','Product added to cart','success')
+this.userService.cartCount.next(
+this.userService.cartCount.value + 1
+);
+}
+else if(res==-1){
+Swal.fire('Info','Product already added in cart','info')
+}
+
+})
+
+  });
+  
+
+}
+
 
 }

@@ -14,7 +14,6 @@ builder.Services.AddScoped<ICategoryServies, CategoryRepo>();
 builder.Services.AddScoped<IProductServices, ProductRepo>();
 builder.Services.AddScoped<IProductServices, ProductRepo>();
 builder.Services.AddScoped<ICartServices, CartRepo>();
-builder.Services.AddScoped<ICartServices, CartRepo>();
 
 builder.Services.AddCors(options =>
 {

@@ -1,79 +1,52 @@
-<div class="cart-page py-4">
+<div class="cart-page">
 
 <div class="container">
 
-<h3 class="mb-4 fw-bold text-teal">Shopping Cart</h3>
+<h3 class="cart-title">Shopping Cart</h3>
 
-<!-- EMPTY CART -->
-<div *ngIf="cartItems.length === 0" class="empty-cart text-center p-5">
+<div *ngIf="cartItems.length==0" class="empty-cart">
 
-<i class="bi bi-cart-x empty-icon"></i>
-
-<h4 class="mt-3">Your Cart is Empty</h4>
-
-<p class="text-muted">Looks like you haven't added anything yet</p>
-
-<button class="btn btn-teal mt-2">
-Continue Shopping
-</button>
+<h4>Your cart is empty</h4>
+<p>Add some products to start shopping</p>
 
 </div>
 
-<!-- CART ITEMS -->
+<div class="cart-grid" *ngIf="cartItems.length>0">
 
-<div *ngIf="cartItems.length > 0" class="row">
+<div class="cart-items">
 
-<div class="col-lg-8">
+<div class="cart-card" *ngFor="let item of cartItems">
 
-<div class="card cart-card mb-3" *ngFor="let item of cartItems">
+<div class="cart-img">
 
-<div class="card-body">
-
-<div class="row align-items-center">
-
-<div class="col-md-2 col-4">
-
-<img [src]="item.image" class="img-fluid product-img">
+<img [src]="'https://localhost:7071'+item.p_picture" alt="{{item.p_name}}">
 
 </div>
 
-<div class="col-md-4 col-8">
+<div class="cart-info">
 
-<h6 class="fw-semibold">{{item.name}}</h6>
+<h5>{{item.p_name}}</h5>
 
-<p class="price">₹{{item.price}}</p>
-
-</div>
-
-<div class="col-md-3 col-6 mt-2 mt-md-0">
+<p class="price">₹{{item.p_price}}</p>
 
 <div class="qty-box">
 
-<button class="btn btn-sm btn-outline-secondary"
-(click)="decrease(item)">-</button>
+<button (click)="decrease(item)">-</button>
 
-<span class="px-3">{{item.qty}}</span>
+<span>{{item.quantity}}</span>
 
-<button class="btn btn-sm btn-outline-secondary"
-(click)="increase(item)">+</button>
+<button (click)="increase(item)">+</button>
 
 </div>
 
 </div>
 
-<div class="col-md-2 col-4 text-end">
+<div class="cart-total">
 
-<h6 class="fw-bold">
-₹{{item.price * item.qty}}
-</h6>
+<p>₹{{getItemTotal(item)}}</p>
 
-</div>
-
-<div class="col-md-1 col-2 text-end">
-
-<button class="btn btn-sm btn-danger"
-(click)="remove(item.id)">
-x
+<button class="remove-btn" (click)="remove(item.cartitem_id)">
+Remove
 </button>
 
 </div>
@@ -82,49 +55,39 @@ x
 
 </div>
 
-</div>
+<div class="summary">
 
-</div>
+<h4>Order Summary</h4>
 
-<!-- SUMMARY -->
+<div class="row">
 
-<div class="col-lg-4">
-
-<div class="card summary-card">
-
-<div class="card-body">
-
-<h5 class="fw-bold mb-3">Order Summary</h5>
-
-<div class="d-flex justify-content-between mb-2">
 <span>Subtotal</span>
+
 <span>₹{{getTotal()}}</span>
+
 </div>
 
-<div class="d-flex justify-content-between mb-2">
+<div class="row">
+
 <span>Delivery</span>
-<span class="text-success">Free</span>
+
+<span class="free">Free</span>
+
 </div>
 
 <hr>
 
-<div class="d-flex justify-content-between fw-bold">
+<div class="row total">
 
 <span>Total</span>
 
-<span class="text-teal">
-₹{{getTotal()}}
-</span>
+<span>₹{{getTotal()}}</span>
 
 </div>
 
-<button class="btn btn-teal w-100 mt-3">
+<button class="checkout">
 Proceed to Checkout
 </button>
-
-</div>
-
-</div>
 
 </div>
 

@@ -20,7 +20,7 @@ namespace ecomm.Infrastructure.Services
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public void AddUser(User_Reg user)
+        public int AddUser(User_Reg user)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -34,7 +34,8 @@ namespace ecomm.Infrastructure.Services
                 cmd.Parameters.AddWithValue("@dob", user.dob);
                 cmd.Parameters.AddWithValue("@gender", user.gender);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                int res=cmd.ExecuteNonQuery();
+                return res;
             }
         }
 

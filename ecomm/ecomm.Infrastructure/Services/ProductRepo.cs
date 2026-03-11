@@ -97,6 +97,7 @@ namespace ecomm.Infrastructure.Services
                     produ.p_desc = reader["description"].ToString();
                     produ.p_picture = reader["p_picture"].ToString();
                     produ.p_price = Convert.ToInt32(reader["p_price"]);
+                    produ.p_id = Convert.ToInt32(reader["p_id"]);
                     produ.c_id = Convert.ToInt32(reader["c_id"]);
                     prod.Add(produ);
                 }
