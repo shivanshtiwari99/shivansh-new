@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
-import { UserService , Product } from '../../../services/userservices';
+import { UserService, Product } from '../../../services/userservices';
 
 
 @Component({
@@ -24,20 +24,20 @@ export class CategoryProduct implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
     this.route.queryParams.subscribe(params => {
 
-      this.categoryId= +params['cid']||0;
+      this.categoryId = +params['cid'] || 0;
 
       if (this.categoryId) {
         this.loadProducts();
       } else {
         Swal.fire('Error', 'Category ID not found', 'error');
       }
-    }); 
+    });
   }
 
   loadProducts() {
@@ -69,31 +69,31 @@ export class CategoryProduct implements OnInit {
     );
   }
 
-   addToCart(product: Product) {
-  
+  addToCart(product: Product) {
+
     const email = this.userService.getEmailFromToken();
-  
+
     this.userService.getUserByEmail(email).subscribe(user => {
-  
+
       const u_id = user[0].u_id;
-  
-     this.userService.addToCart(u_id, product.p_id, 1).subscribe(res=>{
-  
-  if(res==1){
-  Swal.fire('Success','Product added to cart','success')
-  this.userService.cartCount.next(
-  this.userService.cartCount.value + 1
-  );
-  }
-  else if(res==-1){
-  Swal.fire('Info','Product already added in cart','info')
-  }
-  
-  })
-  
+
+      this.userService.addToCart(u_id, product.p_id, 1).subscribe(res => {
+
+        if (res == 1) {
+          Swal.fire('Success', 'Product added to cart', 'success')
+          this.userService.cartCount.next(
+            this.userService.cartCount.value + 1
+          );
+        }
+        else if (res == -1) {
+          Swal.fire('Info', 'Product already added in cart', 'info')
+        }
+
+      })
+
     });
-    
-  
+
+
   }
 
 }

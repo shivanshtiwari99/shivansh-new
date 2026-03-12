@@ -1,0 +1,72 @@
+<div class="order-details-wrapper py-4">
+
+<div class="container">
+
+<h4 class="page-title mb-4">Order Details</h4>
+
+<div class="order-info mb-4">
+
+<div class="row">
+
+<div class="col-md-4">
+<strong>Order ID:</strong> #{{orderId}}
+</div>
+
+<div class="col-md-4">
+<strong>Status:</strong>
+<span class="status-badge">Placed</span>
+</div>
+
+<div class="col-md-4">
+<strong>Delivery:</strong> 3-5 days
+</div>
+
+</div>
+
+</div>
+
+<div class="product-row"
+*ngFor="let item of items">
+
+<div class="row align-items-center">
+
+<div class="col-md-2 col-4">
+
+<img class="product-img"
+[src]="'https://localhost:7071'+item.p_picture">
+
+</div>
+
+<div class="col-md-6 col-8">
+
+<div class="product-name">
+{{item.p_name}}
+</div>
+
+<div class="small text-muted">
+Price: ₹{{item.price}}
+</div>
+
+<div class="small text-muted">
+Qty: {{item.quantity}}
+</div>
+
+</div>
+
+<div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+<div class="product-total">
+
+₹{{item.price * item.quantity}}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>

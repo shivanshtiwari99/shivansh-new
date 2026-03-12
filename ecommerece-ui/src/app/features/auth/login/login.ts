@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
 })
 export class Login {
@@ -34,10 +34,10 @@ export class Login {
 
             if (role === 'admin') {
               this.router.navigate(['/admin-dashboard']);
-              Swal.fire('Success','Admin Login Successfully','success')
+              Swal.fire('Success', 'Admin Login Successfully', 'success')
             } else if (role === 'user') {
               this.router.navigate(['/userCategory']);
-              Swal.fire('Success','User Login Successfully','success')
+              Swal.fire('Success', 'User Login Successfully', 'success')
             } else {
               this.router.navigate(['/login']);
             }

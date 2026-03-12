@@ -1,0 +1,67 @@
+.orders-wrapper{
+background:#f7f6f6;
+min-height:100vh;
+}
+
+.page-title{
+font-weight:600;
+color:#008080;
+}
+
+.order-box{
+background:#ffffff;
+padding:20px;
+border-radius:10px;
+border:1px solid #e5e5e5;
+transition:0.3s;
+}
+
+.order-box:hover{
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.label{
+font-size:13px;
+color:#777;
+}
+
+.value{
+font-weight:600;
+}
+
+.price{
+color:#008080;
+}
+
+.status-badge{
+background:#d5f5e3;
+color:#008080;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+}
+
+.cancel-btn{
+background:#e73838;
+color:#fff;
+border:none;
+padding:9px 9px;
+}
+.view-btn{
+background:#008080;
+color:#fff;
+border:none;
+padding:9px 9px;
+}
+
+.view-btn:hover{
+background:#008080;
+color:#fff;
+}
+.status-badge{
+background:#d5f5e3;
+color:#1e8449;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+}

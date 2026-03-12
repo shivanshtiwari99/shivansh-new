@@ -10,10 +10,7 @@
 
   <!-- HEADER RIGHT -->
   <div class="header-right">
-    <input type="text" 
-           placeholder="Search product..." 
-           [(ngModel)]="searchText" 
-           (input)="filterProducts()" />
+    <input type="text" placeholder="Search product..." [(ngModel)]="searchText" (input)="filterProducts()" />
   </div>
 
 </div>
@@ -26,11 +23,10 @@
   </div>
 
   <div *ngFor="let product of filteredProducts" class="card-item">
-    
+
     <!-- IMAGE -->
     <div class="card-image p-0 m-0">
-      <img [src]="'https://localhost:7071' + product.p_picture" 
-           [alt]="product.p_name" />
+      <img [src]="'https://localhost:7071' + product.p_picture" [alt]="product.p_name" />
     </div>
 
     <!-- CARD TOP -->

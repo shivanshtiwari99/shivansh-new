@@ -1,0 +1,56 @@
+<div class="orders-wrapper py-4">
+
+<div class="container">
+
+<h4 class="page-title mb-4">My Orders</h4>
+
+<div class="order-box mb-3" *ngFor="let o of orders">
+
+<div class="row align-items-center position-relative">
+
+<div class="col-md-3 col-6">
+<div class="label">Order ID</div>
+<div class="value">#{{o.order_id}}</div>
+</div>
+
+<div class="col-md-3 col-6">
+<div class="label">Date</div>
+<div class="value">{{o.order_date | date:'mediumDate'}}</div>
+</div>
+
+<div class="col-md-3 col-6 mt-3 mt-md-0">
+<div class="label">Total</div>
+<div class="value price">₹{{o.total_amount}}</div>
+</div>
+
+<div class="col-md-3 col-6 mt-3 mt-md-0 ">
+
+<span class="status-badge position-absolute " style="top:-15px;right:0px;">
+{{o.status}}
+</span>
+
+<div class="d-flex gap-2 mt-4">
+
+<button 
+class="btn cancel-btn"
+*ngIf="o.status!='Cancelled'"
+(click)="cancelOrder(o.order_id)">
+Cancel Order
+</button>
+
+<button 
+class="btn view-btn"
+[routerLink]="['/orderdetails',o.order_id]">
+View Details
+</button>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>

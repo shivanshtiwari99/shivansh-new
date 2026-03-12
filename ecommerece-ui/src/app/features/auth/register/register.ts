@@ -21,7 +21,7 @@ export class Register {
 
   private apiUrl = 'https://localhost:7071/api/HomeApi/Register'; // backend URL
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private authService:AuthService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -34,41 +34,41 @@ export class Register {
 
   onSubmit() {
 
-  if (this.registerForm.invalid) {
-    this.registerForm.markAllAsTouched();
-    Swal.fire({
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      Swal.fire({
         icon: 'warning',
         title: 'Warning',
         text: 'Fill all fields correctly'
       });
-    return;
-  }
-
-  const payload = this.registerForm.value;
-
-  this.authService.register(payload).subscribe({
-    next: (res:any) => {
-      console.log(res);
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Registration Successful'
-      });
-
-      this.registerForm.reset();
-    },
-
-    error: (err) => {
-      console.error(err);
-
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Registration failed'
-      });
+      return;
     }
-  });
 
-}
+    const payload = this.registerForm.value;
+
+    this.authService.register(payload).subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Registration Successful'
+        });
+
+        this.registerForm.reset();
+      },
+
+      error: (err) => {
+        console.error(err);
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Registration failed'
+        });
+      }
+    });
+
+  }
 }

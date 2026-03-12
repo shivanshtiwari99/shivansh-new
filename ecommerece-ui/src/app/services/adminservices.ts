@@ -33,10 +33,10 @@ export interface User {
   providedIn: 'root'
 })
 export class AdminService {
-  
+
   private apiUrl = environment.apiUrl + 'adminapi';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private get headers(): HttpHeaders {
     return new HttpHeaders({
@@ -50,9 +50,9 @@ export class AdminService {
   }
 
   //Category Page\
-  
+
   getCategories(): Observable<Category[]> {
-    
+
     return this.http.get<Category[]>(`${this.apiUrl}/categories`, { headers: this.headers });
   }
 

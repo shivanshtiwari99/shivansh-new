@@ -2,23 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { UserService , User } from '../../../services/userservices';
+import { UserService, User } from '../../../services/userservices';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, CommonModule,ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css']
 })
 export class ProfileComponent implements OnInit {
 
-  user: User = {u_id:'', name: '', email: '', mobile: '', dob: '', gender: '' };
+  user: User = { u_id: '', name: '', email: '', mobile: '', dob: '', gender: '' };
   editUser: User = { ...this.user };
 
   avatarUrl = '/Photos/product/Cricket_2.webp';
   modalOpen = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
 
     if (this.modalOpen) {
       this.editUser = { ...this.user };
-      this.editUser.dob=(this.editUser.dob).split('T')[0];
+      this.editUser.dob = (this.editUser.dob).split('T')[0];
     }
 
   }

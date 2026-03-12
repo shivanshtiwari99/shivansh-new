@@ -8,12 +8,15 @@ import { AdminDashboard } from './features/admin/admin-dashboard/admin-dashboard
 import { AdminCategory } from './features/admin/admin-category/admin-category';
 import { authGuard } from './auth-guard';
 import { AdminProduct } from './features/admin/admin-product/admin-product';
-import { AdminUsers } from './features/admin/admin-users/admin-users';
+import { AdminUsers } from './features/admin/admin-users/admin-users';  
 import { UserCategory } from './features/user/user-category/user-category';
 import { CategoryProduct } from './features/user/categoryproduct/categoryproduct';
 import { AllProduct } from './features/user/userproduct/userproduct';
 import { ProfileComponent } from './features/user/profile/profile';
 import { CartComponent } from './features/user/cart/cart';
+import { Checkout } from './features/user/checkout/checkout';
+import { MyordersComponent } from './features/user/myorders/myorders';
+import { OrderdetailsComponent } from './features/user/orderdetails/orderdetails';
 
 export const routes: Routes = [
 
@@ -57,6 +60,9 @@ export const routes: Routes = [
       {path:'userProduct',component:AllProduct},
       {path:'profile',component:ProfileComponent},
       {path:'cart',component:CartComponent},
+      {path:'checkout',component:Checkout},
+      {path:'myorder',component:MyordersComponent},
+      {path:'orderdetails/:id',component:OrderdetailsComponent},
       // aur user ke aur pages add kar sakte ho
     ]
   }

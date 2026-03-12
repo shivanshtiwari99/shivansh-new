@@ -3,7 +3,6 @@ using ecomm.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using AspNetCoreGeneratedDocument;
 
 namespace ecomm.Controllers
 {
@@ -16,13 +15,15 @@ namespace ecomm.Controllers
         private readonly ICategoryServies _categ;
         private readonly IProductServices _prod;
         private readonly ICartServices _cart;
+        private readonly IOrderServices _order;
 
-        public UserApiController(IUserServices user,ICategoryServies categ,IProductServices prod,ICartServices cart)
+        public UserApiController(IUserServices user,ICategoryServies categ,IProductServices prod,ICartServices cart,IOrderServices order)
         {
             _user = user;
             _categ = categ;
             _prod = prod;
             _cart = cart;
+            _order = order;
             
         }
 
@@ -91,5 +92,32 @@ namespace ecomm.Controllers
             return Ok(res);
         }
 
+        [HttpPost("placeorder")]
+        public IActionResult PlaceOrder(int u_id)
+        {
+            var res = _order.PlaceOrder(u_id);
+            return Ok(res);
+        }
+        [HttpGet("getorders/{uid}")]
+        public IActionResult GetOrders(int uid)
+        {
+            var data = _order.GetOrders(uid);
+            return Ok(data);
+        }
+
+        [HttpGet("getorderitems/{orderid}")]
+        public IActionResult GetOrderItems(int orderid)
+        {
+            var data = _order.GetOrderItems(orderid);
+            return Ok(data);
+        }
+
+        [HttpPost("cancelorder")]
+        public IActionResult CancelOrder(int order_id)
+        {
+            var res = _order.CancelOrder(order_id);
+
+            return Ok(res);
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UserService , Product } from '../../../services/userservices';
+import { UserService, Product } from '../../../services/userservices';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,13 +17,13 @@ export class AllProduct implements OnInit {
   filteredProducts: Product[] = [];
   searchText = '';
   loading = false;
-  
+
   constructor(private userService: UserService) {
     this.loadProducts();
   }
 
   ngOnInit(): void {
-    
+
   }
 
   loadProducts() {
@@ -57,30 +57,30 @@ export class AllProduct implements OnInit {
 
   addToCart(product: Product) {
 
-  const email = this.userService.getEmailFromToken();
+    const email = this.userService.getEmailFromToken();
 
-  this.userService.getUserByEmail(email).subscribe(user => {
+    this.userService.getUserByEmail(email).subscribe(user => {
 
-    const u_id = user[0].u_id;
+      const u_id = user[0].u_id;
 
-   this.userService.addToCart(u_id, product.p_id, 1).subscribe(res=>{
+      this.userService.addToCart(u_id, product.p_id, 1).subscribe(res => {
 
-if(res==1){
-Swal.fire('Success','Product added to cart','success')
-this.userService.cartCount.next(
-this.userService.cartCount.value + 1
-);
-}
-else if(res==-1){
-Swal.fire('Info','Product already added in cart','info')
-}
+        if (res == 1) {
+          Swal.fire('Success', 'Product added to cart', 'success')
+          this.userService.cartCount.next(
+            this.userService.cartCount.value + 1
+          );
+        }
+        else if (res == -1) {
+          Swal.fire('Info', 'Product already added in cart', 'info')
+        }
 
-})
+      })
 
-  });
-  
+    });
 
-}
+
+  }
 
 
 }

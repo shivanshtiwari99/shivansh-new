@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { count, Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Token } from '@angular/compiler';
 
@@ -37,7 +37,7 @@ export class UserService {
 
   private apiUrl = `${environment.apiUrl}UserApi`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private get headers(): HttpHeaders {
     return new HttpHeaders({
@@ -45,92 +45,121 @@ export class UserService {
     });
   }
 
-// Category Page
+  // Category Page
 
-getCategories(): Observable<Category[]> {
+  getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(
       `${this.apiUrl}/categories`,
       { headers: this.headers }
     );
   }
 
-// Explore Product Page
-getCategoryProducts(cid: number): Observable<Product[]> {
+  // Explore Product Page
+  getCategoryProducts(cid: number): Observable<Product[]> {
     return this.http.get<Product[]>(
       `${this.apiUrl}/categproducts?cid=${cid}`,
       { headers: this.headers }
     );
   }
 
-// Product Page
-getAllProducts(): Observable<Product[]> {
-  return this.http.get<Product[]>(
-    `${this.apiUrl}/products`,
+  // Product Page
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(
+      `${this.apiUrl}/products`,
+      { headers: this.headers }
+    );
+  }
+
+  // Profile Page
+
+  getUserByEmail(email: string): Observable<User[]> {
+    return this.http.get<User[]>(
+      `${this.apiUrl}/emailuser?email=${email}`,
+      { headers: this.headers }
+    );
+
+  }
+
+  updateUser(user: User): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/edituser`,
+      user,
+      { headers: this.headers }
+    );
+  }
+
+  getEmailFromToken(): string {
+
+    const token = localStorage.getItem('token');
+    if (!token) return '';
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    return payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+
+  }
+
+  // ADD TO CART
+  addToCart(u_id: number, p_id: number, quantity: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/addtocart?u_id=${u_id}&p_id=${p_id}&quantity=${quantity}`,
+      {},
+      { headers: this.headers }
+    );
+  }
+
+  // GET CART
+  getCart(u_id: number): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/getcart?u_id=${u_id}`,
+      { headers: this.headers }
+    );
+  }
+
+  // REMOVE CART ITEM
+  removeCartItem(cartitem_id: number) {
+    return this.http.delete(`${this.apiUrl}/removecart?cartitem_id=${cartitem_id}`, { headers: this.headers })
+  }
+
+  updateQuantity(cartitem_id: number, qty: number) {
+    return this.http.put(
+      `${this.apiUrl}/updatecartqty?cartitem_id=${cartitem_id}&qty=${qty}`,
+      {},
+      { headers: this.headers }
+    )
+
+  }
+  cartCount = new BehaviorSubject<number>(0);
+  cartCount$ = this.cartCount.asObservable();
+  updateCartCount(count: number) {
+    this.cartCount.next(count);
+  }
+
+  placeOrder(uid:number){
+  return this.http.post<any>(this.apiUrl+'/placeorder?u_id='+uid,{},
     { headers: this.headers }
   );
 }
 
-// Profile Page
-
-getUserByEmail(email: string): Observable<User[]> {
-  return this.http.get<User[]>(
-    `${this.apiUrl}/emailuser?email=${email}`,
-    { headers: this.headers }
-  );
+getOrders(uid:number){
+  console.log(uid);
+  
+  return this.http.get<any>(this.apiUrl+'/getorders/'+uid,{ headers: this.headers });
+}
+getOrderItems(orderId:number){
+ return this.http.get<any>(this.apiUrl+'/getorderitems/'+orderId,{ headers: this.headers });
 }
 
-updateUser(user: User): Observable<any> {
-  return this.http.put(
-    `${this.apiUrl}/edituser`,
-    user,
-    { headers: this.headers }
-  );
-}
+cancelOrder(order_id:number){
 
-getEmailFromToken(): string {
-
-  const token = localStorage.getItem('token');
-  if (!token) return '';
-
-  const payload = JSON.parse(atob(token.split('.')[1]));
-
-  return payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
-
-}
-
-// ADD TO CART
-addToCart(u_id:number,p_id:number,quantity:number):Observable<any>{
-  return this.http.post(
-    `${this.apiUrl}/addtocart?u_id=${u_id}&p_id=${p_id}&quantity=${quantity}`,
-    {},
-    {headers:this.headers}
-  );
-}
-
-// GET CART
-getCart(u_id:number):Observable<any>{
-  return this.http.get(
-    `${this.apiUrl}/getcart?u_id=${u_id}`,
-    {headers:this.headers}
-  );
-}
-
-// REMOVE CART ITEM
-removeCartItem(cartitem_id:number){
-return this.http.delete(`${this.apiUrl}/removecart?cartitem_id=${cartitem_id}`,{headers:this.headers})
-}
-
-updateQuantity(cartitem_id:number,qty:number){
-return this.http.put(
-`${this.apiUrl}/updatecartqty?cartitem_id=${cartitem_id}&qty=${qty}`,
+return this.http.post(
+this.apiUrl+'/cancelorder?order_id='+order_id,
 {},
-{headers:this.headers}
+{ headers: this.headers }
 )
+
 }
-cartCount = new BehaviorSubject<number>(0);
-cartCount$ = this.cartCount.asObservable();
-updateCartCount(count:number){
-  this.cartCount.next(count);
-}
+
+  
 
 }
