@@ -13,12 +13,14 @@ namespace ecomm.Controllers
         private readonly IUserServices _user;
         private readonly ICategoryServies _categ;
         private readonly IProductServices _prod;
+        private readonly IOrderServices _order;
 
-        public AdminApiController(IUserServices user,ICategoryServies categ, IProductServices prod)
+        public AdminApiController(IUserServices user,ICategoryServies categ, IProductServices prod,IOrderServices order)
         {
             _user = user;
             _categ = categ;
             _prod = prod;
+            _order = order;
         }
         
          //user Api
@@ -55,7 +57,8 @@ namespace ecomm.Controllers
             {
                 totalUsers = _user.GetUser().Count,
                 totalCategories = _categ.AllCategory().Count,
-                totalProducts = _prod.AllProduct().Count
+                totalProducts = _prod.AllProduct().Count,
+                totalOrders = _order.GetAllOrders().Count
             };
 
             return Ok(data);
@@ -230,6 +233,22 @@ namespace ecomm.Controllers
             _prod.DeleteProduct(pid);
             return Ok("Product Deleted Successfully");
         }
-        
+
+        // ORDER APIs
+
+        [HttpGet("orders")]
+        public IActionResult GetAllOrders()
+        {
+            var orders = _order.GetAllOrders();
+            return Ok(orders);
+        }
+
+        [HttpPut("updateorderstatus")]
+        public IActionResult UpdateOrderStatus(int order_id, string status)
+        {
+            _order.UpdateOrderStatus(order_id, status);
+            return Ok("Order Status Updated");
+        }
+
     }
 }

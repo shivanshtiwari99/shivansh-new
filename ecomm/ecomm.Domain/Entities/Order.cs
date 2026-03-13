@@ -13,6 +13,7 @@ namespace ecomm.Domain.Entities
         public DateTime order_date { get; set; }
         public int total_amount { get; set; }
         public string status { get; set; }
+        public string email { get; set; }
 
     }
 }

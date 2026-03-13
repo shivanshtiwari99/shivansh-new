@@ -25,3 +25,11 @@
 .btn-delete:hover {
     background: #ffd4d4;
 }
+.user-count{
+     background: #e6f4f4;
+    color: #008080;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}

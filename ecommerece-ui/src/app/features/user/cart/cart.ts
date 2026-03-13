@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../../services/userservices';
+import { Cartservices } from '../../../services/cartservices';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
 
   cartItems: CartItem[] = []
 
-  constructor(private userService: UserService,private router:Router) { }
+  constructor(private cartServices: Cartservices,private router:Router) { }
 
   ngOnInit() {
     this.loadCart()
@@ -33,13 +33,13 @@ export class CartComponent implements OnInit {
 
   loadCart() {
 
-    const email = this.userService.getEmailFromToken()
+    const email = this.cartServices.getEmailFromToken()
 
-    this.userService.getUserByEmail(email).subscribe(user => {
+    this.cartServices.getUserByEmail(email).subscribe(user => {
 
       const uid = user[0].u_id
 
-      this.userService.getCart(uid).subscribe(res => {
+      this.cartServices.getCart(uid).subscribe(res => {
         this.cartItems = res
       })
 
@@ -51,7 +51,7 @@ export class CartComponent implements OnInit {
 
     item.quantity++
 
-    this.userService.updateQuantity(item.cartitem_id, item.quantity)
+    this.cartServices.updateQuantity(item.cartitem_id, item.quantity)
       .subscribe()
 
   }
@@ -62,7 +62,7 @@ export class CartComponent implements OnInit {
 
       item.quantity--
 
-      this.userService.updateQuantity(item.cartitem_id, item.quantity)
+      this.cartServices.updateQuantity(item.cartitem_id, item.quantity)
         .subscribe()
 
     }
@@ -83,7 +83,7 @@ export class CartComponent implements OnInit {
 
       if (result.isConfirmed) {
 
-        this.userService.removeCartItem(id).subscribe(() => {
+        this.cartServices.removeCartItem(id).subscribe(() => {
 
           this.cartItems = this.cartItems.filter(x => x.cartitem_id != id);
 
@@ -92,8 +92,8 @@ export class CartComponent implements OnInit {
             'Your item has been removed.',
             'success'
           );
-          this.userService.cartCount.next(
-        this.userService.cartCount.value - 1
+          this.cartServices.cartCount.next(
+        this.cartServices.cartCount.value - 1
       );
 
         });
@@ -116,19 +116,19 @@ this.router.navigate(['/checkout']);
 }
 placeOrder(){
 
-const email = this.userService.getEmailFromToken();
+const email = this.cartServices.getEmailFromToken();
 
-this.userService.getUserByEmail(email).subscribe(user=>{
+this.cartServices.getUserByEmail(email).subscribe(user=>{
 
 const uid = user[0].u_id;
 
-this.userService.placeOrder(uid).subscribe(res=>{
+this.cartServices.placeOrder(uid).subscribe(res=>{
 
 Swal.fire('Success', 'Order Placed Successfully', 'success')
 
 this.router.navigate(['/cart']);
 this.loadCart();
-this.userService.cartCount.next(0);
+this.cartServices.cartCount.next(0);
 
 });
 

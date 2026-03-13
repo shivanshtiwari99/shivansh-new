@@ -17,6 +17,7 @@ import { CartComponent } from './features/user/cart/cart';
 import { Checkout } from './features/user/checkout/checkout';
 import { MyordersComponent } from './features/user/myorders/myorders';
 import { OrderdetailsComponent } from './features/user/orderdetails/orderdetails';
+import { AdminOrders } from './features/admin/admin-orders/admin-orders';
 
 export const routes: Routes = [
 
@@ -42,7 +43,8 @@ export const routes: Routes = [
       { path: 'admin-dashboard', component: AdminDashboard },
       { path: 'category', component: AdminCategory },
       {path:'product',component:AdminProduct},
-      {path:'user',component:AdminUsers}
+      {path:'user',component:AdminUsers},
+      { path: 'orders', component: AdminOrders }
       // aur admin ke aur pages add kar sakte ho
     ]
   },

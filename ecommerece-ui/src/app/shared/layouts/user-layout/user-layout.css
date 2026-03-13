@@ -60,3 +60,54 @@ display:flex;
 align-items:center;
 gap:8px;
 }
+/* menu button */
+.menu-btn{
+position:fixed;
+top:15px;
+left:15px;
+background:#008080;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+font-size:18px;
+z-index:1001;
+display:none;
+}
+
+/* overlay */
+.sidebar-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.3);
+display:none;
+z-index:999;
+}
+
+.sidebar-overlay.active{
+display:block;
+}
+
+/* mobile sidebar */
+@media(max-width:768px){
+
+.sidebar{
+transform:translateX(-100%);
+transition:0.3s;
+z-index:1000;
+}
+
+.sidebar.open{
+transform:translateX(0);
+}
+
+.menu-btn{
+display:block;
+}
+
+main{
+margin-left:0;
+padding:1.5rem;
+}
+
+}

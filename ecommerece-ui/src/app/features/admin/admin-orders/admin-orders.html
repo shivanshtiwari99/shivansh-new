@@ -1,0 +1,98 @@
+<div class="container mt-2">
+
+  <!-- TOP BAR -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div class="d-flex align-items-center gap-2">
+      <h3 class="m-0">Orders</h3>
+
+      <span class="badge order-count">
+        {{filteredOrders.length}} Total
+      </span>
+    </div>
+
+    <div class="search-box">
+      <input 
+        type="text"
+        class="form-control"
+        placeholder="Search order..."
+        [(ngModel)]="searchText"
+        (input)="filterOrders()"
+      >
+    </div>
+
+  </div>
+
+
+  <!-- TABLE -->
+  <div class="table-responsive  custom-table ">
+
+    <table class="table table-hover table-bordered table-stripped text-center align-middle">
+
+      <thead class="table-dark">
+        <tr>
+          <th>Order ID</th>
+          <th>User Email</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let o of filteredOrders">
+
+          <td>{{o.order_id}}</td>
+          <td>{{o.email}}</td>
+          <td>{{o.order_date | date:'dd-MM-yyyy'}}</td>
+          <td>₹ {{o.total_amount}}</td>
+          <td>
+  <span class="status-badge"
+        [ngClass]="{
+          'status-cancelled': o.status === 'Cancelled',
+          'status-delivered': o.status === 'Delivered',
+          'status-shipped': o.status === 'Shipped',
+          'status-confirmed': o.status === 'Confirmed',
+          'status-placed': o.status === 'Placed'
+        }">
+    {{o.status}}
+  </span>
+</td>
+
+         <td class="d-flex gap-2">
+
+  <select #status
+          class="form-select form-select-sm"
+          [value]="o.status"
+          [disabled]="o.status === 'Cancelled'">
+
+    <option value="Placed">Placed</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Shipped">Shipped</option>
+    <option value="Delivered">Delivered</option>
+    <option value="Cancelled">Cancelled</option>
+
+  </select>
+
+  <button 
+    class="btn update-btn"
+    (click)="updateStatus(o.order_id,status.value)"
+    [disabled]="o.status === 'Cancelled'">
+
+    Update
+
+  </button>
+
+</td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

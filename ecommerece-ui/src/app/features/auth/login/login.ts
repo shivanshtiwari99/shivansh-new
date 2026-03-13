@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
+  styleUrls:['./login.css']
 })
 export class Login {
 
@@ -33,11 +34,15 @@ export class Login {
             const role = this.authService.getUserRole()?.toLowerCase();
 
             if (role === 'admin') {
-              this.router.navigate(['/admin-dashboard']);
-              Swal.fire('Success', 'Admin Login Successfully', 'success')
+              Swal.fire('Success', 'Admin Login Successfully', 'success').then(()=>{
+                this.router.navigate(['/admin-dashboard']);
+              });
+              
             } else if (role === 'user') {
-              this.router.navigate(['/userCategory']);
-              Swal.fire('Success', 'User Login Successfully', 'success')
+              Swal.fire('Success', 'User Login Successfully', 'success').then(()=>{
+                this.router.navigate(['/userCategory']);
+              });
+              
             } else {
               this.router.navigate(['/login']);
             }
@@ -45,7 +50,11 @@ export class Login {
         },
         error: (err) => {
           console.error(err);
-          alert("Invalid Credentials ❌");
+          Swal.fire({
+            title:'Invalid Credentials',
+            text:'Check your Credentials',
+            icon:'error'
+          })
         }
       });
     }

@@ -11,13 +11,14 @@ color:#008080;
 .order-box{
 background:#ffffff;
 padding:20px;
-border-radius:10px;
+border-radius:12px;
 border:1px solid #e5e5e5;
 transition:0.3s;
 }
 
 .order-box:hover{
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+transform:translateY(-2px);
 }
 
 .label{
@@ -35,33 +36,79 @@ color:#008080;
 
 .status-badge{
 background:#d5f5e3;
-color:#008080;
+color:#1e8449;
 padding:5px 12px;
 border-radius:20px;
 font-size:12px;
+}
+
+.status-badge.cancelled{
+background:#fdecea;
+color:#e74c3c;
 }
 
 .cancel-btn{
 background:#e73838;
 color:#fff;
 border:none;
-padding:9px 9px;
+padding:7px 3px;
+border-radius:6px;
 }
+
+.cancel-btn:hover{
+background:#c62828;
+}
+
 .view-btn{
 background:#008080;
 color:#fff;
 border:none;
-padding:9px 9px;
+padding:7px 5px;
+border-radius:6px;
 }
 
 .view-btn:hover{
-background:#008080;
-color:#fff;
+background:#006666;
+}
+
+.cancelled-text{
+color:#e74c3c;
+font-weight:600;
+font-size:13px;
 }
 .status-badge{
-background:#d5f5e3;
-color:#1e8449;
 padding:4px 10px;
 border-radius:20px;
 font-size:12px;
+font-weight:500;
+}
+
+/* Placed */
+.status-placed{
+background:#e6f4f4;
+color:#008080;
+}
+
+/* Confirmed */
+.status-confirmed{
+background:#e8f0fe;
+color:#1967d2;
+}
+
+/* Shipped */
+.status-shipped{
+background:#fff3cd;
+color:#856404;
+}
+
+/* Delivered */
+.status-delivered{
+background:#d4edda;
+color:#155724;
+}
+
+/* Cancelled */
+.status-cancelled{
+background:#f8d7da;
+color:#b02a37;
 }

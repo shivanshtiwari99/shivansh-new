@@ -13,5 +13,7 @@ namespace ecomm.Application.Interfaces
         List<Order> GetOrders(int u_id);
         List<OrderItems> GetOrderItems(int order_id);
         int CancelOrder(int order_id);
+        List<Order> GetAllOrders();
+        int UpdateOrderStatus(int order_id, string status);
     }
 }

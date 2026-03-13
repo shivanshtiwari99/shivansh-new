@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../../../services/userservices';
+import { Cartservices } from '../../../services/cartservices';
 
 @Component({
   selector: 'app-user-layout',
@@ -10,9 +10,9 @@ import { UserService } from '../../../services/userservices';
   styleUrls: ['./user-layout.css']
 })
 export class UserLayout {
-  constructor(private userService:UserService){}
+  constructor(private cartServices:Cartservices){}
   ngOnInit(){
-    this.userService.cartCount$.subscribe(count=>{
+    this.cartServices.cartCount$.subscribe(count=>{
 this.cartCount = count;
 });
 
@@ -29,20 +29,26 @@ this.cartCount = count;
   }
   loadCartCount(){
 
-const email=this.userService.getEmailFromToken();
+const email=this.cartServices.getEmailFromToken();
 
-this.userService.getUserByEmail(email).subscribe(user=>{
+this.cartServices.getUserByEmail(email).subscribe(user=>{
 
 const u_id=user[0].u_id;
 
-this.userService.getCart(u_id).subscribe(res=>{
+this.cartServices.getCart(u_id).subscribe(res=>{
 
-this.userService.updateCartCount(res.length);
-
-});
+this.cartServices.updateCartCount(res.length);
 
 });
 
+});
+
+}
+
+sidebarOpen = false;
+
+toggleSidebar(){
+  this.sidebarOpen = !this.sidebarOpen;
 }
 
 }

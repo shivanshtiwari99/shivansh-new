@@ -95,8 +95,7 @@ namespace ecomm.Infrastructure.Services
                     oi.price = Convert.ToInt32(reader["price"]);
                     oi.p_name = reader["p_name"].ToString();
                     oi.p_picture = reader["p_picture"].ToString();
-                    //oi.status = reader["status"].ToString();
-
+                    oi.status = reader["status"].ToString();
                     items.Add(oi);
                 }
 
@@ -114,6 +113,58 @@ namespace ecomm.Infrastructure.Services
 
                 cmd.Parameters.AddWithValue("@order_id", order_id);
                 cmd.Parameters.AddWithValue("@action", 4);
+
+                con.Open();
+
+                int res = cmd.ExecuteNonQuery();
+
+                return res;
+            }
+        }
+
+        public List<Order> GetAllOrders()
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("sp_order", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@action", 5);
+
+                con.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                List<Order> orders = new List<Order>();
+
+                while (reader.Read())
+                {
+                    Order o = new Order();
+
+                    o.order_id = Convert.ToInt32(reader["order_id"]);
+                    
+                    o.order_date = Convert.ToDateTime(reader["order_date"]);
+                    o.total_amount = Convert.ToInt32(reader["total_amount"]);
+                    o.status = reader["status"].ToString();
+                    o.email = reader["email"].ToString();
+
+                    orders.Add(o);
+                }
+
+                return orders;
+            }
+        }
+
+        public int UpdateOrderStatus(int order_id, string status)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("sp_order", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@order_id", order_id);
+                cmd.Parameters.AddWithValue("@status", status);
+                cmd.Parameters.AddWithValue("@action", 6);
 
                 con.Open();
 

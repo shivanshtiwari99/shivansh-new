@@ -1,3 +1,6 @@
+<button class="menu-btn" (click)="toggleSidebar()">
+  <i class="fa-solid fa-bars"></i>
+</button>
 <!-- Loader -->
 <div id="loader" [class.active]="loading">
   <div class="loader-box">
@@ -5,9 +8,16 @@
     <p>Loading...</p>
   </div>
 </div>
+<!-- Mobile Menu Button -->
+
+
+<!-- Overlay -->
+<div class="sidebar-overlay" 
+     [class.active]="sidebarOpen"
+     (click)="toggleSidebar()"></div>
 
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="sidebar" [class.open]="sidebarOpen">
   <div class="sidebar-top">
     <img src="assets/photos/1.png" alt="Logo" />
   </div>

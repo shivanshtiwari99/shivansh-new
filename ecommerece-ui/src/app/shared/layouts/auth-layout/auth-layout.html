@@ -1,16 +1,24 @@
-<nav style="background:#212529;padding:15px;">
-  <span style="color:white;font-size:20px;">Ecommerce</span>
+<nav class="navbar navbar-expand-lg custom-navbar">
 
-  <span style="float:right;">
-    <a routerLink="/login" style="color:white;margin-right:15px;text-decoration:none;">
-      Login
-    </a>
-    <a routerLink="/register" style="color:white;text-decoration:none;">
-      Register
-    </a>
-  </span>
+  <div class="container">
+
+    <a class="navbar-brand brand-title">Ecommerce</a>
+
+    <div class="ms-auto nav-links">
+
+      <a routerLink="/login" class="nav-link">Login</a>
+
+      <a routerLink="/register" class="register-btn">
+        Register
+      </a>
+
+    </div>
+
+  </div>
+
 </nav>
 
-<div style="padding:30px;">
+
+<div class="page-wrapper">
   <router-outlet></router-outlet>
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/userservices';
+import { Cartservices } from '../../../services/cartservices';
 
 @Component({
   selector: 'app-checkout',
@@ -10,17 +10,17 @@ import { UserService } from '../../../services/userservices';
 })
 export class Checkout {
 
-  constructor(private userService:UserService,private router:Router){}
+  constructor(private cartServices:Cartservices,private router:Router){}
 
 placeOrder(){
 
-const email = this.userService.getEmailFromToken();
+const email = this.cartServices.getEmailFromToken();
 
-this.userService.getUserByEmail(email).subscribe(user=>{
+this.cartServices.getUserByEmail(email).subscribe(user=>{
 
 const uid = user[0].u_id;
 
-this.userService.placeOrder(uid).subscribe(res=>{
+this.cartServices.placeOrder(uid).subscribe(res=>{
 
 alert("Order Placed Successfully");
 

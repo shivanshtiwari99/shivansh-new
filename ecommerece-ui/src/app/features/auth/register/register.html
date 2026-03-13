@@ -1,39 +1,81 @@
-<div class="container">
-  <div class="row mt-4">
-    <div class="col-sm-6 mx-auto border p-4 border-2 position-relative">
+<div class="register-page">
 
-      <!-- Loader -->
-      <div *ngIf="loading" class="loader-overlay">
-        <div class="spinner"></div>
-      </div>
+  <div class="container">
 
-      <h2 class="fw-bolder text-center">
-        Registration <span class="text-primary fw-bolder">Form</span>
-      </h2>
+    <div class="row justify-content-center">
 
-      <hr class="w-75 mx-auto" />
+      <div class="col-lg-5 col-md-7">
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="register-card position-relative">
 
-        <input type="text" formControlName="name" class="form-control mb-3" placeholder="Enter Your Name..." />
-        <input type="email" formControlName="email" class="form-control mb-3" placeholder="Enter Your Email Id..." />
-        <input type="number" formControlName="password" class="form-control mb-3"
-          placeholder="Enter Your Password..." />
-        <input type="string" formControlName="mobile" class="form-control mb-3" placeholder="Enter Your Mobile..." />
-        <input type="date" formControlName="dob" class="form-control mb-3" />
+          <!-- Loader -->
+          <div *ngIf="loading" class="loader-overlay">
+            <div class="spinner-border text-teal"></div>
+          </div>
 
-        <div class="mb-3">
-          <input type="radio" value="Male" formControlName="gender" /> Male &nbsp;&nbsp;&nbsp;
-          <input type="radio" value="Female" formControlName="gender" /> Female
+          <h3 class="register-title">
+            Create Account
+          </h3>
+
+          <p class="text-center text-muted mb-4">
+            Register to start shopping
+          </p>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            <input type="text"
+              formControlName="name"
+              class="form-control custom-input mb-3"
+              placeholder="Full Name">
+
+            <input type="email"
+              formControlName="email"
+              class="form-control custom-input mb-3"
+              placeholder="Email Address">
+
+            <input type="password"
+              formControlName="password"
+              class="form-control custom-input mb-3"
+              placeholder="Password">
+
+            <input type="text"
+              formControlName="mobile"
+              class="form-control custom-input mb-3"
+              placeholder="Mobile Number">
+
+            <input type="date"
+              formControlName="dob"
+              class="form-control custom-input mb-3">
+
+            <div class="gender-box mb-3">
+              <label class="me-3">
+                <input type="radio" value="Male" formControlName="gender"> Male
+              </label>
+
+              <label>
+                <input type="radio" value="Female" formControlName="gender"> Female
+              </label>
+            </div>
+
+            <div class="text-end mb-3">
+              Already a user?
+              <a routerLink="/login" class="login-link">
+                Login
+              </a>
+            </div>
+
+            <button type="submit" class="btn register-btn w-100">
+              Register
+            </button>
+
+          </form>
+
         </div>
 
-        <div class="text-end mb-3">Already a User? <a routerLink="/login">Login</a></div>
+      </div>
 
-        <button type="submit" class="btn btn-primary d-block mx-auto w-50">
-          Register Now
-        </button>
-
-      </form>
     </div>
+
   </div>
+
 </div>

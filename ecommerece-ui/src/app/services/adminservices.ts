@@ -28,6 +28,25 @@ export interface User {
   gender: string;
   role?: string;
 }
+export interface Order {
+  order_id: number;
+  u_id: number;
+  order_date: string;
+  total_amount: number;
+  status: string;
+  email:string;
+}
+
+export interface OrderItem {
+  orderitem_id: number;
+  order_id: number;
+  p_id: number;
+  quantity: number;
+  price: number;
+  p_name: string;
+  p_picture: string;
+  status: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +96,7 @@ export class AdminService {
   }
 
   // Product page
-
+  
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products`, { headers: this.headers });
   }
@@ -107,4 +126,20 @@ export class AdminService {
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteUser?uid=${id}`, { headers: this.headers, responseType: 'text' });
   }
+
+  // Orders
+
+getOrders(): Observable<Order[]> {
+  return this.http.get<Order[]>(`${this.apiUrl}/orders`, { headers: this.headers });
+}
+
+getOrderItems(orderId: number): Observable<OrderItem[]> {
+  return this.http.get<OrderItem[]>(`${this.apiUrl}/orderitems?order_id=${orderId}`,
+     { headers: this.headers });
+}
+
+updateOrderStatus(order_id: number, status: string): Observable<any> {
+  return this.http.put(`${this.apiUrl}/updateorderstatus?order_id=${order_id}&status=${status}`, {},
+     { headers: this.headers, responseType: 'text' });
+}
 }

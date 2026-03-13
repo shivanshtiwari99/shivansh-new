@@ -6,18 +6,28 @@
 
 <div class="order-info mb-4">
 
-<div class="row">
+<div class="row align-items-center">
 
 <div class="col-md-4">
-<strong>Order ID:</strong> #{{orderId}}
+<strong>Order ID:</strong> {{orderId}}
 </div>
 
-<div class="col-md-4">
-<strong>Status:</strong>
-<span class="status-badge">Placed</span>
+<div class="col-md-4 text-center">
+
+<span
+class="status-badge"
+[ngClass]="{
+  'status-placed': items[0]?.status === 'Placed',
+  'status-confirmed': items[0]?.status === 'Confirmed',
+  'status-shipped': items[0]?.status === 'Shipped',
+  'status-delivered': items[0]?.status === 'Delivered',
+  'status-cancelled': items[0]?.status === 'Cancelled'
+}">
+{{items[0]?.status}}
+</span>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-4 text-md-end">
 <strong>Delivery:</strong> 3-5 days
 </div>
 
@@ -25,40 +35,30 @@
 
 </div>
 
-<div class="product-row"
+<div class="products-wrapper">
+
+<div class="product-card"
 *ngFor="let item of items">
 
-<div class="row align-items-center">
-
-<div class="col-md-2 col-4">
+<div class="product-row">
 
 <img class="product-img"
 [src]="'https://localhost:7071'+item.p_picture">
 
-</div>
-
-<div class="col-md-6 col-8">
+<div class="product-info">
 
 <div class="product-name">
 {{item.p_name}}
 </div>
 
-<div class="small text-muted">
-Price: ₹{{item.price}}
-</div>
-
-<div class="small text-muted">
-Qty: {{item.quantity}}
+<div class="product-meta">
+Price: ₹{{item.price}} | Qty: {{item.quantity}}
 </div>
 
 </div>
-
-<div class="col-md-4 text-md-end mt-3 mt-md-0">
 
 <div class="product-total">
-
 ₹{{item.price * item.quantity}}
-
 </div>
 
 </div>

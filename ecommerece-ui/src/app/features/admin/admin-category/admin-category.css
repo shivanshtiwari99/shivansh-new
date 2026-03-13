@@ -139,10 +139,11 @@
 .btn-add {
     background: #008080;
     color: white;
-    padding: 9px 16px;
+    padding: 9px 10px;
     border-radius: 6px;
     font-weight: 500;
     transition: .3s;
+    border:none;
 }
 
 .btn-add:hover {

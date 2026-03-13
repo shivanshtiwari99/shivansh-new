@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { UserService, Product } from '../../../services/userservices';
+import { Cartservices } from '../../../services/cartservices';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class CategoryProduct implements OnInit {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartServices:Cartservices
   ) { }
 
   ngOnInit(): void {
@@ -77,12 +79,12 @@ export class CategoryProduct implements OnInit {
 
       const u_id = user[0].u_id;
 
-      this.userService.addToCart(u_id, product.p_id, 1).subscribe(res => {
+      this.cartServices.addToCart(u_id, product.p_id, 1).subscribe(res => {
 
         if (res == 1) {
           Swal.fire('Success', 'Product added to cart', 'success')
-          this.userService.cartCount.next(
-            this.userService.cartCount.value + 1
+          this.cartServices.cartCount.next(
+            this.cartServices.cartCount.value + 1
           );
         }
         else if (res == -1) {

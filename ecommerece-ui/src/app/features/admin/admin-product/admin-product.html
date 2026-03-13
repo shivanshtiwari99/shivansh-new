@@ -1,10 +1,10 @@
-<div class="container mt-4">
+<div class="container mt-1">
 
   <!-- HEADER -->
   <div class="row mb-4">
     <div class="col-sm-6">
-      <h3 class="d-inline">Products </h3>
-      <span class="category-count "> {{ products.length }} Total</span>
+      <h2 class="d-inline">Products </h2>
+      <span class="category-count"> {{ products.length }} Total</span>
     </div>
     <div class="col-sm-4 text-end">
       <input type="text"
@@ -14,7 +14,7 @@
            (keyup)="filterProducts()">
           </div>
     <div class="col-sm-2 text-end">
-      <button style="background-color: #008080;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+      <button  class="btn-add" data-bs-toggle="modal" data-bs-target="#addModal">
        <i class="fa-solid fa-plus"></i>  Add Product <span class="fs-"> </span>
       </button>
     </div>
@@ -33,7 +33,7 @@
   </div>
 
   <!-- PRODUCT TABLE -->
-  <div class="table-responsive" *ngIf="!loading">
+  <div class="table-responsive mt-4" *ngIf="!loading">
     <table class="table table-bordered text-center table-hover align-middle">
       <thead class="table-dark">
         <tr>

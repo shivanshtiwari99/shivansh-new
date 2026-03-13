@@ -32,11 +32,11 @@
     <p>Total Users</p>
   </div>
 
-  <div class="card" (click)="navigate('/admin/breached-products')">
-    <div class="mx-auto "><i class="fa-solid fa-triangle-exclamation"></i></div>
+  <div class="card" (click)="navigate('/orders')">
+    <div class="mx-auto "><i class="fa-solid fa-truck"></i></div>
     
-    <h3>5</h3>
-    <p>Breached Products</p>
+    <h3>{{ stats.totalOrders }}</h3>
+    <p>Total Orders</p>
   </div>
 
   <!-- New Static Card -->

@@ -10,7 +10,7 @@
 
 <div class="col-md-3 col-6">
 <div class="label">Order ID</div>
-<div class="value">#{{o.order_id}}</div>
+<div class="value">{{o.order_id}}</div>
 </div>
 
 <div class="col-md-3 col-6">
@@ -23,9 +23,18 @@
 <div class="value price">₹{{o.total_amount}}</div>
 </div>
 
-<div class="col-md-3 col-6 mt-3 mt-md-0 ">
+<div class="col-md-3 col-6 mt-3 mt-md-0">
 
-<span class="status-badge position-absolute " style="top:-15px;right:0px;">
+<span 
+class="status-badge position-absolute"
+[ngClass]="{
+  'status-placed': o.status === 'Placed',
+  'status-confirmed': o.status === 'Confirmed',
+  'status-shipped': o.status === 'Shipped',
+  'status-delivered': o.status === 'Delivered',
+  'status-cancelled': o.status === 'Cancelled'
+}"
+style="top:-15px;right:0px;">
 {{o.status}}
 </span>
 
@@ -33,10 +42,25 @@
 
 <button 
 class="btn cancel-btn"
-*ngIf="o.status!='Cancelled'"
+*ngIf="o.status!='Cancelled' && o.status!='Delivered'"
 (click)="cancelOrder(o.order_id)">
 Cancel Order
 </button>
+
+<span 
+class="cancelled-text"
+*ngIf="o.status=='Cancelled'">
+<button disabled class="btn cancel-btn">
+    Order Cancelled
+</button>
+</span>
+<span 
+class="cancelled-text"
+*ngIf="o.status=='Delivered'">
+<button disabled class="btn cancel-btn">
+    Order Delivered
+</button>
+</span>
 
 <button 
 class="btn view-btn"

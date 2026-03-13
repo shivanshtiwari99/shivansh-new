@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService, Product } from '../../../services/userservices';
+import { Cartservices } from '../../../services/cartservices';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,7 +19,7 @@ export class AllProduct implements OnInit {
   searchText = '';
   loading = false;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,private cartservices:Cartservices) {
     this.loadProducts();
   }
 
@@ -63,12 +64,12 @@ export class AllProduct implements OnInit {
 
       const u_id = user[0].u_id;
 
-      this.userService.addToCart(u_id, product.p_id, 1).subscribe(res => {
+      this.cartservices.addToCart(u_id, product.p_id, 1).subscribe(res => {
 
         if (res == 1) {
           Swal.fire('Success', 'Product added to cart', 'success')
-          this.userService.cartCount.next(
-            this.userService.cartCount.value + 1
+          this.cartservices.cartCount.next(
+            this.cartservices.cartCount.value + 1
           );
         }
         else if (res == -1) {

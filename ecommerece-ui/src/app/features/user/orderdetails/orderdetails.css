@@ -10,44 +10,106 @@ font-weight:600;
 
 .order-info{
 background:#ffffff;
-padding:20px;
+padding:18px;
 border-radius:10px;
 border:1px solid #eee;
 }
 
-.product-row{
+.products-wrapper{
+max-width:700px;
+margin:auto;
+}
+
+.product-card{
 background:#ffffff;
-padding:15px;
 border-radius:10px;
 border:1px solid #eee;
+padding:14px 16px;
 margin-bottom:12px;
-transition:0.3s;
+transition:0.25s;
 }
 
-.product-row:hover{
+.product-card:hover{
 box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
+.product-row{
+display:flex;
+align-items:center;
+gap:16px;
+}
+
 .product-img{
-width:70px;
-height:70px;
+width:65px;
+height:65px;
 object-fit:contain;
+}
+
+.product-info{
+flex:1;
 }
 
 .product-name{
 font-weight:600;
+margin-bottom:4px;
+}
+
+.product-meta{
+font-size:13px;
+color:#777;
 }
 
 .product-total{
-font-size:18px;
+font-size:17px;
 font-weight:600;
 color:#008080;
 }
 
 .status-badge{
 background:#d5f5e3;
-color:#008080;
+color:#1e8449;
 padding:5px 12px;
 border-radius:20px;
 font-size:12px;
+}
+
+.status-badge.cancelled{
+background:#fdecea;
+color:#e74c3c;
+}
+.status-badge{
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:500;
+}
+
+/* Placed */
+.status-placed{
+background:#e6f4f4;
+color:#008080;
+}
+
+/* Confirmed */
+.status-confirmed{
+background:#e8f0fe;
+color:#1967d2;
+}
+
+/* Shipped */
+.status-shipped{
+background:#fff3cd;
+color:#856404;
+}
+
+/* Delivered */
+.status-delivered{
+background:#d4edda;
+color:#155724;
+}
+
+/* Cancelled */
+.status-cancelled{
+background:#f8d7da;
+color:#b02a37;
 }
